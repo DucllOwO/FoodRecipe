@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "410456465914",
+    "firebase_url": "https://food-recipe-app-374eb-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "food-recipe-app-374eb",
+    "storage_bucket": "food-recipe-app-374eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410456465914:android:0cf53bddfccb8b6e2a8443",
+        "android_client_info": {
+          "package_name": "com.nmuddd.foodrecipeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410456465914-vvf5mpfbr2q9v57mjfrq5e840lj586as.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_h_KwkLJdqyXZFcoO_RMXFyLlQxlgADo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410456465914-vvf5mpfbr2q9v57mjfrq5e840lj586as.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
