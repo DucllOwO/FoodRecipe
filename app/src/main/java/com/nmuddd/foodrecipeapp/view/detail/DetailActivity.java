@@ -177,7 +177,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
                             for (String idmeal : user.getIdMealFavorite()) {
                                 // remove
                                 if (meal.getIdMeal() == idmeal) {
-                                    snapshot.getRef().removeValue(new DatabaseReference.CompletionListener() {
+                                    dataSnapshot.getRef().removeValue(new DatabaseReference.CompletionListener() {
                                         @Override
                                         public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                             favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite_border));
@@ -190,8 +190,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
                                     List<String> meals = new ArrayList<>();
                                     meals.add(meal.getIdMeal());
                                     user.setIdMealFavorite(meals);
-                                    snapshot.getRef().push().setValue(user);
-                                    snapshot.getRef().removeValue();
+                                    dataSnapshot.getRef().setValue(user);
                                     favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
                                 }
                             }
@@ -200,8 +199,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
                             List<String> meals = new ArrayList<>();
                             meals.add(meal.getIdMeal());
                             user.setIdMealFavorite(meals);
-                            snapshot.getRef().push().setValue(user);
-                            snapshot.getRef().removeValue();
+                            dataSnapshot.getRef().setValue(user);
                             favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
                         }
                     }
