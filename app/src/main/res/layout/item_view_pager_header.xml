@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:strokeAttrs="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/mealThumb"
+                android:src="@drawable/sample_image_meal"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:src="@drawable/shadow_bottom_to_top"
+                android:layout_width="match_parent"
+                android:scaleType="centerCrop"
+                android:layout_alignParentBottom="true"
+                android:layout_height="match_parent" />
+
+            <!--<TextView
+                android:id="@+id/mealName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:shadowColor="#000000"
+                android:shadowDx="1.5"
+
+                android:shadowDy="1.3"
+                android:shadowRadius="1.6"
+                android:text="Meal Name"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:textSize="17sp" />-->
+            <com.nmuddd.foodrecipeapp.Utils.StrokedTextView
+                android:id="@+id/mealName"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="Meal Name"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                strokeAttrs:textStrokeColor="@android:color/black"
+                strokeAttrs:textStrokeWidth="0.3"  android:layout_width="wrap_content"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</FrameLayout>
