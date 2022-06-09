@@ -6,7 +6,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.nmuddd.foodrecipeapp.Utils.Utils;
-import com.nmuddd.foodrecipeapp.model.Meals;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,7 +22,7 @@ public class DetailPresenter {
     void getMealById(String mealName) {
             view.showLoading();
 
-            Utils.getApi().getMealByName(mealName)
+            /*Utils.getApi().getMealByName(mealName)
                     .enqueue(new Callback<Meals>() {
                         @Override
                         public void onResponse(@NonNull Call<Meals> call,@NonNull Response<Meals> response) {
@@ -44,6 +43,6 @@ public class DetailPresenter {
                             view.hideLoading();
                             view.onErrorLoading(t.getLocalizedMessage());
                         }
-                    });
+                    });*/
     }
 }

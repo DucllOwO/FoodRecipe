@@ -23,9 +23,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.Utils.Utils;
-import com.nmuddd.foodrecipeapp.database.FavoriteRepository;
-import com.nmuddd.foodrecipeapp.model.MealFavorite;
-import com.nmuddd.foodrecipeapp.model.Meals;
+import com.nmuddd.foodrecipeapp.model.Meal;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -68,8 +66,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     @BindView(R.id.source)
     TextView source;
 
-    private FavoriteRepository repository;
-    private Meals.Meal meal;
+    private Meal meal;
     MenuItem favoriteItem;
     String strMealName;
 
@@ -78,8 +75,6 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
-
-        repository = new FavoriteRepository(getApplication());
 
         setupActionBar();
 
@@ -119,8 +114,8 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    /*@Override*/
+    /*public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_detail, menu);
         favoriteItem = menu.findItem(R.id.favorite);
         setFavoriteItem();
@@ -141,9 +136,9 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
-    private void addOrRemoveToFavorite() {
+    /*private void addOrRemoveToFavorite() {
         if (isFavorite()) {
             repository.delete(meal.getStrMeal());
         } else {
@@ -160,15 +155,15 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
 
     private boolean isFavorite() {
         return repository.isFavorite(strMealName);
-    }
+    }*/
 
-    private void setFavoriteItem() {
+    /*private void setFavoriteItem() {
         if (isFavorite()) {
             favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
         } else {
             favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite_border));
         }
-    }
+    }*/
 
     @Override
     public void showLoading() {
@@ -181,7 +176,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     }
 
     @Override
-    public void setMeal(Meals.Meal meal) {
+    public void setMeal(Meal meal) {
         this.meal = meal;
 
         Picasso.get().load(meal.getStrMealThumb()).into(mealThumb);

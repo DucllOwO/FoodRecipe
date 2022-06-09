@@ -22,8 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.adapter.RecyclerViewMealByCategoryAdapter;
-import com.nmuddd.foodrecipeapp.database.FavoriteRepository;
-import com.nmuddd.foodrecipeapp.model.Meals;
+import com.nmuddd.foodrecipeapp.model.Meal;
 import com.nmuddd.foodrecipeapp.view.detail.DetailActivity;
 import com.squareup.picasso.Picasso;
 
@@ -49,7 +48,6 @@ public class CategoryFragment extends Fragment implements CategoryView {
     TextView textCategory;
     
     AlertDialog.Builder descDialog;
-    FavoriteRepository repository;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -61,9 +59,9 @@ public class CategoryFragment extends Fragment implements CategoryView {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        super.onViewCreated(view, savedInstanceState);/*
 
-        repository = new FavoriteRepository(getActivity().getApplication());
+        repository = new FavoriteRepository(getActivity().getApplication());*/
 
         if (getArguments() != null) {
             textCategory.setText(getArguments().getString("EXTRA_DATA_DESC"));
@@ -93,8 +91,8 @@ public class CategoryFragment extends Fragment implements CategoryView {
     }
 
     @Override
-    public void setMeals(List<Meals.Meal> meals) {
-        RecyclerViewMealByCategoryAdapter adapter =
+    public void setMeals(List<Meal> meals) {
+        /*RecyclerViewMealByCategoryAdapter adapter =
                 new RecyclerViewMealByCategoryAdapter(getActivity(), meals, repository);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setClipToPadding(false);
@@ -106,7 +104,7 @@ public class CategoryFragment extends Fragment implements CategoryView {
             Intent intent = new Intent(getActivity(), DetailActivity.class);
             intent.putExtra(EXTRA_DETAIL, mealName.getText().toString());
             startActivity(intent);
-        });
+        });*/
     }
 
     @Override

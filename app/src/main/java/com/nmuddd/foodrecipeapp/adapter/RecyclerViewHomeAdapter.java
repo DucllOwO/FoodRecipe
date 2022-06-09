@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmuddd.foodrecipeapp.R;
-import com.nmuddd.foodrecipeapp.model.Categories;
+import com.nmuddd.foodrecipeapp.model.Category;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,11 +21,11 @@ import butterknife.ButterKnife;
 
 public class RecyclerViewHomeAdapter extends RecyclerView.Adapter<RecyclerViewHomeAdapter.RecyclerViewHolder> {
 
-    private List<Categories.Category> categories;
+    private List<Category> categories;
     private Context context;
     private static ClickListener clickListener;
 
-    public RecyclerViewHomeAdapter(List<Categories.Category> categories, Context context) {
+    public RecyclerViewHomeAdapter(List<Category> categories, Context context) {
         this.categories = categories;
         this.context = context;
     }

@@ -23,8 +23,8 @@ import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.adapter.RecyclerViewHomeAdapter;
 import com.nmuddd.foodrecipeapp.adapter.RecyclerViewSearchItemAdapter;
 import com.nmuddd.foodrecipeapp.adapter.ViewPagerHeaderAdapter;
-import com.nmuddd.foodrecipeapp.model.Categories;
-import com.nmuddd.foodrecipeapp.model.Meals;
+import com.nmuddd.foodrecipeapp.model.Category;
+import com.nmuddd.foodrecipeapp.model.Meal;
 import com.nmuddd.foodrecipeapp.view.category.CategoryActivity;
 import com.nmuddd.foodrecipeapp.view.detail.DetailActivity;
 import com.nmuddd.foodrecipeapp.view.favorite.FavoriteActivity;
@@ -48,7 +48,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     RecyclerView recyclerViewCategory;
     @BindView(R.id.favorite) ImageView favorite;
     @BindView(R.id.recyclerSearchItem) RecyclerView recyclerSearchItem;
-
     HomePresenter presenter;
 
     @Override
@@ -117,20 +116,10 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         }
     }
 
-    @Override
-    public void showLoading() {
-        findViewById(R.id.shimmerMeal).setVisibility(View.VISIBLE);
-        findViewById(R.id.shimmerCategory).setVisibility(View.VISIBLE);
-    }
+
 
     @Override
-    public void hideLoading() {
-        findViewById(R.id.shimmerMeal).setVisibility(View.GONE);
-        findViewById(R.id.shimmerCategory).setVisibility(View.GONE);
-    }
-
-    @Override
-    public void setMeal(List<Meals.Meal> meal) {
+    public void setMeal(List<Meal> meal) {
         ViewPagerHeaderAdapter headerAdapter = new ViewPagerHeaderAdapter(meal, this);
         viewPagerMeal.setAdapter(headerAdapter);
         viewPagerMeal.setPadding(20, 0, 20, 0);
@@ -145,7 +134,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     }
 
     @Override
-    public void setMealSearchItem(List<Meals.Meal> meal) {
+    public void setMealSearchItem(List<Meal> meal) {
         RecyclerViewSearchItemAdapter recyclerViewSearchItemAdapter = new RecyclerViewSearchItemAdapter(HomeActivity.this,  meal);
         //Log.i("AAA", presenter.getMealsByName("beef").toString());
         recyclerSearchItem.setAdapter(recyclerViewSearchItemAdapter);
@@ -165,7 +154,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     }
 
     @Override
-    public void setCategory(List<Categories.Category> category) {
+    public void setCategory(List<Category> category) {
         RecyclerViewHomeAdapter homeAdapter = new RecyclerViewHomeAdapter(category, this);
         recyclerViewCategory.setAdapter(homeAdapter);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3,
@@ -190,5 +179,22 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void displayToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showLoading() {
+        findViewById(R.id.shimmerMeal).setVisibility(View.VISIBLE);
+        findViewById(R.id.shimmerCategory).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        findViewById(R.id.shimmerMeal).setVisibility(View.GONE);
+        findViewById(R.id.shimmerCategory).setVisibility(View.GONE);
     }
 }

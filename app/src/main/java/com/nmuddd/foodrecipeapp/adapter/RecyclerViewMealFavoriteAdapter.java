@@ -11,8 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmuddd.foodrecipeapp.R;
-import com.nmuddd.foodrecipeapp.database.FavoriteRepository;
-import com.nmuddd.foodrecipeapp.model.MealFavorite;
+import com.nmuddd.foodrecipeapp.model.Meal;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,15 +21,13 @@ import butterknife.ButterKnife;
 
 public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<RecyclerViewMealFavoriteAdapter.RecyclerViewHolder> {
 
-    private List<MealFavorite> meals;
+    private List<Meal> meals;
     private Context context;
     private static ClickListener clickListener;
-    private FavoriteRepository repository;
 
-    public RecyclerViewMealFavoriteAdapter(Context context, List<MealFavorite> meals, FavoriteRepository repository) {
+    public RecyclerViewMealFavoriteAdapter(Context context, List<Meal> meals) {
         this.meals = meals;
         this.context = context;
-        this.repository = repository;
     }
 
     @NonNull
@@ -44,7 +41,7 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder viewHolder, int i) {
 
-        String strMealThumb = meals.get(i).strMealThumb;
+        /*String strMealThumb = meals.get(i).strMealThumb;
         Picasso.get().load(strMealThumb).placeholder(R.drawable.shadow_bottom_to_top).into(viewHolder.mealThumb);
 
         String strMealName = meals.get(i).strMeal;
@@ -61,7 +58,7 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
             meals.remove(i);
             notifyItemRemoved(i);
             notifyDataSetChanged();
-        });
+        });*/
     }
 
 
@@ -99,7 +96,7 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
         void onClick(View view, int position);
     }
 
-    private boolean isFavorite(String strMealName) {
+    /*private boolean isFavorite(String strMealName) {
         return repository.isFavorite(strMealName);
-    }
+    }*/
 }

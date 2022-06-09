@@ -1,16 +1,27 @@
 package com.nmuddd.foodrecipeapp.view.home;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.room.Dao;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.adapter.RecyclerViewSearchItemAdapter;
-import com.nmuddd.foodrecipeapp.model.Categories;
-import com.nmuddd.foodrecipeapp.model.Meals;
+import com.nmuddd.foodrecipeapp.database.Firebase;
+import com.nmuddd.foodrecipeapp.model.Category;
+import com.nmuddd.foodrecipeapp.model.Meal;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,9 +29,11 @@ import retrofit2.Response;
 
 class HomePresenter {
 
+    Firebase firebase;
     private HomeView view;
 
     public HomePresenter(HomeView view) {
+        firebase = new Firebase();
         this.view = view;
     }
     // get random meal
@@ -28,59 +41,53 @@ class HomePresenter {
 
         view.showLoading();
 
-        Call<Meals> mealsCall = Utils.getApi().getRandomMeal();
-        mealsCall.enqueue(new Callback<Meals>() {
+        Query query = firebase.dbReference.child(firebase.tableNameMeal);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onResponse(@NonNull Call<Meals> call, @NonNull Response<Meals> response) {
-                view.hideLoading();
-
-                if (response.isSuccessful() && response.body() != null) {
-
-                    view.setMeal(response.body().getMeals());
-
-                }
-                else {
-                    view.onErrorLoading(response.message());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    view.hideLoading();
+                    Random rand = new Random();
+                    int n = rand.nextInt(20);
+                    int i = 0;
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        if (i == n) {
+                            List<Meal> meals = new ArrayList<>();
+                            meals.add(dataSnapshot.getValue(Meal.class));
+                            view.setMeal(meals);
+                            break;
+                        } else
+                            i++;
+                    }
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Meals> call, @NonNull Throwable t) {
-                view.hideLoading();
-                view.onErrorLoading(t.getLocalizedMessage());
+            public void onCancelled(@NonNull DatabaseError error) {
+                view.displayToast("Get random meal error!!!");
             }
         });
     }
-    public static List<Meals.Meal> mealList;
 
     void getMealsByName(String mealName) {
-        Log.i("AAA", "getMealsByName execute");
 
-        Call<Meals> mealsCall = Utils.getApi().getMealByName(mealName);
-        mealsCall.enqueue(new Callback<Meals>() {
+        Query query = firebase.dbReference.child(firebase.tableNameMeal).orderByChild("strMeal").equalTo(mealName);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onResponse(@NonNull Call<Meals> call, @NonNull Response<Meals> response) {
-                Log.i("AAA", "onResponse execute duoc ne");
-                Log.i("AAA", response.body().getMeals().get(0).getStrMeal());
-                if (response.isSuccessful() && response.body() != null) {
-                    try {
-                        //view.setMeal(response.body().getMeals());
-                        view.setMealSearchItem(response.body().getMeals());
-                    } catch (Exception e) {
-                        Log.i("AAA", "onResponse execute exception");
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    view.hideLoading();
+                    List<Meal> meals = new ArrayList<>();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        meals.add(dataSnapshot.getValue(Meal.class));
                     }
-
+                    view.setMealSearchItem(meals);
                 }
-                else {
-                    view.onErrorLoading(response.message());
-                }
-                Log.i("AAA", "onResponse execute hoan thanh");
             }
 
             @Override
-            public void onFailure(@NonNull Call<Meals> call, @NonNull Throwable t) {
-                Log.i("AAA", "OnFailute execute");
-                view.onErrorLoading(t.getLocalizedMessage());
+            public void onCancelled(@NonNull DatabaseError error) {
+                view.displayToast("Get search meal error!!!");
             }
         });
     }
@@ -89,29 +96,27 @@ class HomePresenter {
 
         view.showLoading();
 
-        Call<Categories> categoriesCall = Utils.getApi().getCategories();
-        categoriesCall.enqueue(new Callback<Categories>() {
+        Query query = firebase.dbReference.child(firebase.tableNameCategory);
+        List<Category> categories = new ArrayList<>();
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onResponse(@NonNull Call<Categories> call,
-                                   @NonNull Response<Categories> response) {
-
-                view.hideLoading();
-                if (response.isSuccessful() && response.body() != null) {
-
-                    view.setCategory(response.body().getCategories());
-
-                }
-                else {
-                    view.onErrorLoading(response.message());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //view.setCategory(ca);
+                if (snapshot.exists()) {
+                    view.hideLoading();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        categories.add(dataSnapshot.getValue(Category.class));
+                    }
+                    view.setCategory(categories);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Categories> call, @NonNull Throwable t) {
-                view.hideLoading();
-                view.onErrorLoading(t.getLocalizedMessage());
+            public void onCancelled(@NonNull DatabaseError error) {
+                view.displayToast("Get category error!!!");
             }
         });
+
     }
 
 

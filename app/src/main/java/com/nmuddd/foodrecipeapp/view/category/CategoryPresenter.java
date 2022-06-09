@@ -3,7 +3,6 @@ package com.nmuddd.foodrecipeapp.view.category;
 import androidx.annotation.NonNull;
 
 import com.nmuddd.foodrecipeapp.Utils.Utils;
-import com.nmuddd.foodrecipeapp.model.Meals;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +18,7 @@ public class CategoryPresenter {
     void getMealByCategory(String category) {
         
         view.showLoading();
-        Call<Meals> mealsCall = Utils.getApi().getMealByCategory(category);
+        /*Call<Meals> mealsCall = Utils.getApi().getMealByCategory(category);
         mealsCall.enqueue(new Callback<Meals>() {
             @Override
             public void onResponse(@NonNull Call<Meals> call,@NonNull Response<Meals> response) {
@@ -36,7 +35,7 @@ public class CategoryPresenter {
                 view.hideLoading();
                 view.onErrorLoading(t.getLocalizedMessage());
             }
-        });
+        });*/
         
     }
 }

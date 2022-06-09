@@ -86,6 +86,14 @@
                         android:background="@color/cardview_light_background"
                         app:queryHint="@string/input_meal_name"
                         app:iconifiedByDefault="false"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerSearchItem"
+                        android:scrollbars="none"
+                        android:clipToPadding="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

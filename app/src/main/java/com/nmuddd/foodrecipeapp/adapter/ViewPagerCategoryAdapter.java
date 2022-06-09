@@ -6,17 +6,16 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-
-import com.nmuddd.foodrecipeapp.model.Categories;
+import com.nmuddd.foodrecipeapp.model.Category;
 import com.nmuddd.foodrecipeapp.view.category.CategoryFragment;
 
 import java.util.List;
 
 public class ViewPagerCategoryAdapter extends FragmentPagerAdapter {
 
-    private List<Categories.Category> categories;
+    private List<Category> categories;
 
-    public ViewPagerCategoryAdapter(FragmentManager fm, List<Categories.Category> categories) {
+    public ViewPagerCategoryAdapter(FragmentManager fm, List<Category> categories) {
         super(fm);
         this.categories = categories;
     }

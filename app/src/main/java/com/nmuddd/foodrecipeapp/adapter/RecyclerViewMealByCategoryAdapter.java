@@ -11,9 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmuddd.foodrecipeapp.R;
-import com.nmuddd.foodrecipeapp.database.FavoriteRepository;
-import com.nmuddd.foodrecipeapp.model.MealFavorite;
-import com.nmuddd.foodrecipeapp.model.Meals;
+import com.nmuddd.foodrecipeapp.model.Meal;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,15 +21,14 @@ import butterknife.ButterKnife;
 
 public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<RecyclerViewMealByCategoryAdapter.RecyclerViewHolder> {
 
-    private List<Meals.Meal> meals;
+    private List<Meal> meals;
     private Context context;
     private static ClickListener clickListener;
-    private FavoriteRepository repository;
 
-    public RecyclerViewMealByCategoryAdapter(Context context, List<Meals.Meal> meals, FavoriteRepository repository) {
+    public RecyclerViewMealByCategoryAdapter(Context context, List<Meal> meals) {
         this.meals = meals;
         this.context = context;
-        this.repository = repository;
+
     }
 
     @NonNull
@@ -51,7 +48,7 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
         String strMealName = meals.get(i).getStrMeal();
         viewHolder.mealName.setText(strMealName);
 
-        if (isFavorite(strMealName)) {
+        /*if (isFavorite(strMealName)) {
             viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
         } else {
             viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
@@ -64,7 +61,7 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
             } else {
                 viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
             }
-        });
+        });*/
     }
 
 
@@ -102,7 +99,7 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
         void onClick(View view, int position);
     }
 
-    private void addOrRemoveToFavorite(Meals.Meal meal) {
+    /*private void addOrRemoveToFavorite(Meal meal) {
         if (isFavorite(meal.getStrMeal())) {
             repository.delete(meal.getStrMeal());
         } else {
@@ -116,5 +113,5 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
 
     private boolean isFavorite(String strMealName) {
         return repository.isFavorite(strMealName);
-    }
+    }*/
 }

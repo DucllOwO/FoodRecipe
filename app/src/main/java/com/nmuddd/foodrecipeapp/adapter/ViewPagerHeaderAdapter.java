@@ -11,18 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.nmuddd.foodrecipeapp.R;
-import com.nmuddd.foodrecipeapp.model.Meals;
+import com.nmuddd.foodrecipeapp.model.Meal;
+import com.nmuddd.foodrecipeapp.view.home.HomeActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ViewPagerHeaderAdapter extends PagerAdapter {
 
-    private List<Meals.Meal> meals;
+    private List<Meal> meals;
     private Context context;
     private static ClickListener clickListener;
 
-    public ViewPagerHeaderAdapter(List<Meals.Meal> meals, Context context) {
+    public ViewPagerHeaderAdapter(List<Meal> meals, Context context) {
         this.meals = meals;
         this.context = context;
     }

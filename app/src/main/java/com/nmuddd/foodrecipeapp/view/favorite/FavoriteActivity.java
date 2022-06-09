@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.adapter.RecyclerViewMealFavoriteAdapter;
-import com.nmuddd.foodrecipeapp.database.FavoriteRepository;
 import com.nmuddd.foodrecipeapp.view.detail.DetailActivity;
 
 import butterknife.BindView;
@@ -29,8 +28,6 @@ public class FavoriteActivity extends AppCompatActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     
-    FavoriteRepository repository;
-    
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,16 +39,13 @@ public class FavoriteActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        
-        repository = new FavoriteRepository(getApplication());
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setClipToPadding(false);
         
     }
     
     void getFavoriteList() {
-        repository = new FavoriteRepository(getApplication());
-        RecyclerViewMealFavoriteAdapter adapter = new RecyclerViewMealFavoriteAdapter(this, repository.select(), repository);
+        /*RecyclerViewMealFavoriteAdapter adapter = new RecyclerViewMealFavoriteAdapter(this, repository.select(), repository);
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener((view, position) -> {
@@ -59,7 +53,7 @@ public class FavoriteActivity extends AppCompatActivity {
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(EXTRA_DETAIL, strMealName.getText().toString());
             startActivity(intent);
-        });
+        });*/
     }
 
     @Override

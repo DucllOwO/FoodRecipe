@@ -11,7 +11,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.adapter.ViewPagerCategoryAdapter;
-import com.nmuddd.foodrecipeapp.model.Categories;
 import com.nmuddd.foodrecipeapp.view.home.HomeActivity;
 
 import java.util.List;
@@ -40,9 +39,9 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void initIntent() {
-        Intent intent = getIntent();
-        List<Categories.Category> categories =
-                (List<Categories.Category>) intent.getSerializableExtra(HomeActivity.EXTRA_CATEGORY);
+        /*Intent intent = getIntent();*//*
+        List<Category> categories =
+                (List<Category>) intent.getSerializableExtra(HomeActivity.EXTRA_CATEGORY);*//*
         int position = intent.getIntExtra(HomeActivity.EXTRA_POSITION, 0);
         
         ViewPagerCategoryAdapter adapter = new ViewPagerCategoryAdapter(
@@ -51,7 +50,7 @@ public class CategoryActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(position, true);
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();*/
         
     }
 

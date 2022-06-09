@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmuddd.foodrecipeapp.R;
-import com.nmuddd.foodrecipeapp.model.Meals;
+import com.nmuddd.foodrecipeapp.model.Meal;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,9 +21,9 @@ import butterknife.ButterKnife;
 
 public class RecyclerViewSearchItemAdapter extends RecyclerView.Adapter<RecyclerViewSearchItemAdapter.RecyclerViewHolder> {
     private static ClickListener clickListener;
-    private  List<Meals.Meal> meals;
+    private  List<Meal> meals;
     private Context context;
-    public RecyclerViewSearchItemAdapter(Context context,  List<Meals.Meal> meals) {
+    public RecyclerViewSearchItemAdapter(Context context,  List<Meal> meals) {
         this.meals = meals;
         this.context = context;
     }
@@ -38,7 +38,7 @@ public class RecyclerViewSearchItemAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder holder, int position) {
-        Meals.Meal meal = meals.get(position);
+        Meal meal = meals.get(position);
         String strMealThumb = meals.get(position).getStrMealThumb();
 
         Picasso.get().load(strMealThumb).placeholder(R.drawable.shadow_bottom_to_top).into(holder.mealThumb);
@@ -50,7 +50,7 @@ public class RecyclerViewSearchItemAdapter extends RecyclerView.Adapter<Recycler
         return meals.size();
     }
 
-    public Meals.Meal getMeal(int position) {
+    public Meal getMeal(int position) {
         return meals.get(position);
     }
 
