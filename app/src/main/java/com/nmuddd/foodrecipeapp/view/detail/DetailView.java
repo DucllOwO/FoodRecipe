@@ -8,4 +8,5 @@ public interface DetailView {
     void hideLoading();
     void setMeal(Meal meal);
     void onErrorLoading(String message);
+    void displayToast(String message);
 }

@@ -97,19 +97,19 @@ public class SignupTabFragment extends Fragment {
                                                         taskAddUser.addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
-                                                                Toast.makeText(getContext(), "Resistered successfully. Please check your email for activation", Toast.LENGTH_SHORT).show();
+                                                                Toast.makeText(getContext(), "Resistered successfully. Please check your email for activation", Toast.LENGTH_LONG).show();
                                                                 email_et.setText("");
                                                                 password_et.setText("");
                                                                 repassword_et.setText("");
                                                             }
                                                         });
                                                     } else {
-                                                        Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                                     }
                                                 }
                                             });
                                         } else
-                                            Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
                                     }
                                 });

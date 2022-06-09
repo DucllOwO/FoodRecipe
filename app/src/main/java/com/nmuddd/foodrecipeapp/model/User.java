@@ -4,6 +4,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Serializable {
     @SerializedName("idUser")
@@ -17,7 +19,17 @@ public class User implements Serializable {
     private String password;
     @SerializedName("idMealFavorite")
     @Expose
-    private String[] idMealFavorite;
+    private List<String> idMealFavorite;
+
+    public User() {
+    }
+
+    public User(String idUser, String email, String password, List<String> idMealFavorite) {
+        this.idUser = idUser;
+        this.email = email;
+        this.password = password;
+        this.idMealFavorite = idMealFavorite;
+    }
 
     public String getIdUser() {
         return idUser;
@@ -43,11 +55,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String[] getIdMealFavorite() {
+    public List<String> getIdMealFavorite() {
         return idMealFavorite;
     }
 
-    public void setIdMealFavorite(String[] idMealFavorite) {
+    public void setIdMealFavorite(List<String> idMealFavorite) {
         this.idMealFavorite = idMealFavorite;
     }
 }

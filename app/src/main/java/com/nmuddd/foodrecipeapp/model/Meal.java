@@ -12,9 +12,6 @@ public class Meal implements Serializable {
     @SerializedName("idMeal")
     @Expose
     private String idMeal;
-    @SerializedName("isFavorite")
-    @Expose
-    private String isFavorite;
     @SerializedName("strMeal")
     @Expose
     private String strMeal;
@@ -166,6 +163,9 @@ public class Meal implements Serializable {
     @SerializedName("dateModified")
     @Expose
     private Object dateModified;
+
+    public Meal() {
+    }
 
     public String getIdMeal() {
         return idMeal;
@@ -573,13 +573,5 @@ public class Meal implements Serializable {
 
     public void setDateModified(Object dateModified) {
         this.dateModified = dateModified;
-    }
-
-    public String getIsFavorite() {
-        return isFavorite;
-    }
-
-    public void setIsFavorite(String isFavorite) {
-        this.isFavorite = isFavorite;
     }
 }

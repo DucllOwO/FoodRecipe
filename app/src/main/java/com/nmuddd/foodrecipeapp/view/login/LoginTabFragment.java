@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.nmuddd.foodrecipeapp.R;
+import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
 import com.nmuddd.foodrecipeapp.view.home.HomeActivity;
 
 public class LoginTabFragment extends Fragment {
@@ -75,12 +76,15 @@ public class LoginTabFragment extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful())
-                                        if (mAuth.getCurrentUser().isEmailVerified())
+                                        if (mAuth.getCurrentUser().isEmailVerified()) {
+                                            CurrentUser currentUser = new CurrentUser(mAuth.getCurrentUser());
                                             startActivity(new Intent(getContext(), HomeActivity.class));
+                                        }
+
                                         else
-                                            Toast.makeText(getContext(), "Please verify your email address", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "Please verify your email address", Toast.LENGTH_LONG).show();
                                     else
-                                        Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             });
             }

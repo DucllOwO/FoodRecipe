@@ -20,6 +20,9 @@ public class Category implements Serializable {
     @Expose
     private String strCategoryDescription;
 
+    public Category() {
+    }
+
     public String getIdCategory() {
         return idCategory;
     }
