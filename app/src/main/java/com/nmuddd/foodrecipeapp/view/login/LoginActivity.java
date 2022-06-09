@@ -39,7 +39,6 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
-    private static final int REQ_ONE_TAP = 2;
     @BindView(R.id.login_viewPager)
     ViewPager viewPager;
     @BindView(R.id.tab_layout_login)
@@ -101,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomeActivity.class));
 
             } catch (ApiException e) {
-                Toast.makeText(getApplicationContext(), "Loiiiii", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Login fail!!!", Toast.LENGTH_SHORT).show();
             }
         }
     }

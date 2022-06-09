@@ -36,7 +36,7 @@ public class SignupTabFragment extends Fragment {
         repassword_et = root.findViewById(R.id.repassword_edit_text);
         signup_button = root.findViewById(R.id.button_signup);
 
-        email_et.setTranslationY(300);
+        /*email_et.setTranslationY(300);
         password_et.setTranslationY(300);
         repassword_et.setTranslationY(300);
         signup_button.setTranslationY(300);
@@ -49,7 +49,7 @@ public class SignupTabFragment extends Fragment {
         email_et.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
         password_et.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
         repassword_et.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
-        signup_button.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
+        signup_button.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();*/
         setupSignup();
 
 

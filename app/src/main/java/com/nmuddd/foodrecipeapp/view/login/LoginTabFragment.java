@@ -37,7 +37,7 @@ public class LoginTabFragment extends Fragment {
         email_et = root.findViewById(R.id.email_login_edit_text);
         password_et = root.findViewById(R.id.password_login_edit_text);
         forgot_password = root.findViewById(R.id.forgot_password);
-        login_button = root.findViewById(R.id.button_login);
+        login_button = root.findViewById(R.id.button_login);/*
 
         email_et.setTranslationY(300);
         password_et.setTranslationY(300);
@@ -52,8 +52,16 @@ public class LoginTabFragment extends Fragment {
         email_et.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
         password_et.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
         forgot_password.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
-        login_button.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
+        login_button.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();*/
 
+        setupLogin();
+
+        //setupAnimate();
+        // Inflate the layout for this fragment
+        return root;
+    }
+
+    private void setupLogin() {
         mAuth = FirebaseAuth.getInstance();
 
         login_button.setOnClickListener(new View.OnClickListener() {
@@ -77,9 +85,5 @@ public class LoginTabFragment extends Fragment {
                             });
             }
         });
-
-        //setupAnimate();
-        // Inflate the layout for this fragment
-        return root;
     }
 }
