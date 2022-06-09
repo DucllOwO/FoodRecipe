@@ -13,17 +13,24 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.SuccessContinuation;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.nmuddd.foodrecipeapp.R;
+import com.nmuddd.foodrecipeapp.database.Firebase;
+import com.nmuddd.foodrecipeapp.model.User;
 
 public class SignupTabFragment extends Fragment {
     EditText email_et;
     EditText password_et;
     TextView repassword_et;
     Button signup_button;
-
+    Firebase firebase;
     private FirebaseAuth mAuth;
     float v = 0;
     @Override
@@ -35,7 +42,7 @@ public class SignupTabFragment extends Fragment {
         password_et = root.findViewById(R.id.password_signup_edit_text);
         repassword_et = root.findViewById(R.id.repassword_edit_text);
         signup_button = root.findViewById(R.id.button_signup);
-
+        firebase = new Firebase();
         /*email_et.setTranslationY(300);
         password_et.setTranslationY(300);
         repassword_et.setTranslationY(300);
@@ -81,10 +88,21 @@ public class SignupTabFragment extends Fragment {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        Toast.makeText(getContext(), "Resistered successfully. Please check your email for activation", Toast.LENGTH_SHORT).show();
-                                                        email_et.setText("");
-                                                        password_et.setText("");
-                                                        repassword_et.setText("");
+                                                        User user = new User();
+                                                        user.setIdUser(mAuth.getUid());
+                                                        user.setEmail(email_et.getText().toString());
+                                                        user.setPassword(password_et.getText().toString());
+                                                        user.setIdMealFavorite(null);
+                                                        Task<Void> taskAddUser = firebase.dbReference.child(firebase.tableNameUser).push().setValue(user);
+                                                        taskAddUser.addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                Toast.makeText(getContext(), "Resistered successfully. Please check your email for activation", Toast.LENGTH_SHORT).show();
+                                                                email_et.setText("");
+                                                                password_et.setText("");
+                                                                repassword_et.setText("");
+                                                            }
+                                                        });
                                                     } else {
                                                         Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                                     }
