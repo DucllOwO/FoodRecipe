@@ -3,25 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/drawable/viewpager_background.xml" value="0.1" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/activity_category.xml" value="0.2234375" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/activity_home.xml" value="0.1" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/activity_login.xml" value="0.2234375" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/fragment_category.xml" value="0.13541666666666666" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/fragment_farvorite.xml" value="0.1" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/fragment_home.xml" value="0.2" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/fragment_login_tab.xml" value="0.1" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/fragment_signup_tab.xml" value="0.2234375" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/item_recycler_category.xml" value="0.1" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/item_recycler_meal.xml" value="0.30495689655172414" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/item_recycler_search.xml" value="0.2234375" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/item_view_pager_header.xml" value="0.2234375" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/item_view_pager_header_shimmer.xml" value="0.2234375" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/menu/menu_bottom_nav.xml" value="0.1" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/menu/menu_detail.xml" value="0.2234375" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/menu/my_theme.xml" value="0.1" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_category.xml" value="0.1" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_farvorite.xml" value="0.1" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_home.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_login_tab.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_signup_tab.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/item_recycler_search.xml" value="0.2" />
       </map>
     </option>
   </component>

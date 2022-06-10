@@ -22,7 +22,9 @@ import com.nmuddd.foodrecipeapp.model.Meal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +34,6 @@ class HomePresenter {
 
     Firebase firebase;
     private HomeView view;
-
     public HomePresenter(HomeView view) {
         firebase = new Firebase();
         this.view = view;
@@ -71,18 +72,17 @@ class HomePresenter {
     }
 
     void getMealsByName(String mealName) {
-
-        Query query = firebase.dbReference.child(firebase.tableNameMeal).orderByChild("strMeal").equalTo(mealName);
+        Query query = firebase.dbReference.child(firebase.tableNameMeal);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    view.hideLoading();
-                    List<Meal> meals = new ArrayList<>();
+                    List<Meal> mealTemp = new ArrayList<>();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        meals.add(dataSnapshot.getValue(Meal.class));
+                        if (Pattern.compile(Pattern.quote(mealName), Pattern.CASE_INSENSITIVE).matcher(dataSnapshot.getValue(Meal.class).getStrMeal()).find())
+                            mealTemp.add(dataSnapshot.getValue(Meal.class));
                     }
-                    view.setMealSearchItem(meals);
+                    view.setMealSearchItem(mealTemp);
                 }
             }
 

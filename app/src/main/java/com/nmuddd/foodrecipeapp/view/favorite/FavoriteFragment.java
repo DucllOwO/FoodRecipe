@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.adapter.RecyclerViewMealFavoriteAdapter;
@@ -32,6 +33,7 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
     RecyclerView recyclerView;
     Toolbar toolbar;
     FavoriteView favoriteView;
+    SwipeRefreshLayout swipeRefreshLayout;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,9 +41,20 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         toolbar = view.findViewById(R.id.toolbar);
+        swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
+
+
 
         FavoritePresenter favoritePresenter = new FavoritePresenter(this);
         favoritePresenter.getMealFavorite();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                favoritePresenter.getMealFavorite();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setClipToPadding(false);

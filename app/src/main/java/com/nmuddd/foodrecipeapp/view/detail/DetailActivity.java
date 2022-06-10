@@ -107,7 +107,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         DetailPresenter presenter = new DetailPresenter(this, getApplicationContext());
 
         presenter.getMealById(strMealName);
-        setFavoriteItem();
+
 
     }
 
@@ -230,7 +230,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
                             user.setMealFavorite(new ArrayList<>());
                         if (user != null && user.getMealFavorite() != null) {
                             for (Meal meal1 : user.getMealFavorite()) {
-                                if (Objects.equals(meal, meal1)) {
+                                if (meal.getIdMeal().equals(meal1.getIdMeal())) {
                                     favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
                                     break;
                                 } else {

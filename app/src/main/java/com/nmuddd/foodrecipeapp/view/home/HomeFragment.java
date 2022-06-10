@@ -34,7 +34,6 @@ import com.nmuddd.foodrecipeapp.view.detail.DetailActivity;
 import java.io.Serializable;
 import java.util.List;
 
-import butterknife.BindView;
 
 public class HomeFragment extends Fragment implements HomeView {
     private View view;
@@ -48,6 +47,7 @@ public class HomeFragment extends Fragment implements HomeView {
     ImageView favorite;
     RecyclerView recyclerSearchItem;
     HomePresenter presenter;
+    SearchView searchView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,38 +58,36 @@ public class HomeFragment extends Fragment implements HomeView {
         favorite = view.findViewById(R.id.favorite);
         recyclerSearchItem = view.findViewById(R.id.recyclerSearchItem);
 
-
-        presenter = new HomePresenter(this);
-        presenter.getRandomMeals();
-        presenter.getCategories();
-
-        SearchView searchView = view.findViewById(R.id.searchView);
+        searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                presenter.getMealsByName(s);
-                Log.i("AAA", "Thoat ra khoi presenter");
-                /*RecyclerViewSearchItemAdapter recyclerViewSearchItemAdapter = new RecyclerViewSearchItemAdapter(HomeActivity.this,  HomePresenter.mealList);
-                //Log.i("AAA", presenter.getMealsByName("beef").toString());
-                recyclerSearchItem.setAdapter(recyclerViewSearchItemAdapter);
-
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeActivity.this);
-                recyclerSearchItem.setLayoutManager(linearLayoutManager);*/
-
-                /*Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                intent.putExtra(EXTRA_DETAIL, searchView.getQuery().toString());
-                startActivity(intent);
-                return true;*/
+                if (!s.isEmpty())
+                {
+                    recyclerSearchItem.setVisibility(View.VISIBLE);
+                    presenter.getMealsByName(s);
+                }
+                else
+                    recyclerSearchItem.setVisibility(View.GONE);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-
-
-                return false;
+                if (s.isEmpty()) {
+                    recyclerSearchItem.removeAllViewsInLayout();
+                    recyclerSearchItem.setVisibility(View.GONE);
+                }
+                return true;
             }
         });
+
+        presenter = new HomePresenter(this);
+        presenter.getRandomMeals();
+        presenter.getCategories();
+
+
+
         return view;
     }
 
@@ -136,7 +134,6 @@ public class HomeFragment extends Fragment implements HomeView {
         RecyclerViewSearchItemAdapter recyclerViewSearchItemAdapter = new RecyclerViewSearchItemAdapter(getContext(),  meal);
         //Log.i("AAA", presenter.getMealsByName("beef").toString());
         recyclerSearchItem.setAdapter(recyclerViewSearchItemAdapter);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerSearchItem.setLayoutManager(linearLayoutManager);
 
