@@ -1,54 +1,48 @@
-package com.nmuddd.foodrecipeapp.view.category;
+package com.nmuddd.foodrecipeapp.view.favorite;
 
 import androidx.annotation.NonNull;
 
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.nmuddd.foodrecipeapp.Utils.Utils;
+import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.Meal;
+import com.nmuddd.foodrecipeapp.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class CategoryPresenter {
-    private CategoryView view;
+class FavoritePresenter {
     Firebase firebase;
-    public CategoryPresenter(CategoryView view) {
-        this.view = view;
+    private FavoriteView view;
+    FirebaseUser firebaseUser;
+
+    public FavoritePresenter(FavoriteView view) {
         firebase = new Firebase();
+        this.view = view;
     }
 
-    void getMealByCategory(String category) {
-
-        view.showLoading();
-
-        Query query = firebase.dbReference.child(firebase.tableNameMeal).orderByChild("strCategory")
-                .equalTo(category);
+    void getMealFavorite() {
+        Query query = firebase.dbReference.child("User").orderByChild("idUser").equalTo(CurrentUser.idUser);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    view.hideLoading();
                     List<Meal> meals = new ArrayList<>();
-                    for (DataSnapshot meal : snapshot.getChildren()) {
-                        meals.add(meal.getValue(Meal.class));
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        meals = dataSnapshot.getValue(User.class).getMealFavorite();
                     }
-                    view.setMeals(meals);
+                    view.setFavoriteList(meals);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                view.displayToast(error.getMessage());
+
             }
         });
-
     }
 }

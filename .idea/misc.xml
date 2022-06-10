@@ -5,36 +5,23 @@
       <map>
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/drawable/viewpager_background.xml" value="0.1" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/activity_category.xml" value="0.2234375" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/activity_login.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/fragment_category.xml" value="0.13541666666666666" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/fragment_farvorite.xml" value="0.1" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/fragment_login_tab.xml" value="0.1" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/fragment_signup_tab.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/item_recycler_category.xml" value="0.1" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/item_recycler_meal.xml" value="0.30495689655172414" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/item_recycler_search.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/item_view_pager_header.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/layout/item_view_pager_header_shimmer.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/menu/menu_bottom_nav.xml" value="0.1" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/menu/menu_detail.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/menu/my_theme.xml" value="0.1" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable-xxxhdpi/ic_account.xml" value="0.314" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable-xxxhdpi/ic_home.xml" value="0.314" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable-xxxhdpi/ic_list.xml" value="0.314" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable/ic_circle.xml" value="0.314" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable/ic_favorite.xml" value="0.314" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable/ic_favorite_border.xml" value="0.314" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable/ic_home.xml" value="0.223" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable/ic_info.xml" value="0.303" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable/ic_more.xml" value="0.303" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable/ic_play.xml" value="0.303" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable/ic_search.xml" value="0.303" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable/line_shape.xml" value="0.303" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/drawable/shadow.xml" value="0.314" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/layout/activity_home.xml" value="0.2" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/layout/activity_login.xml" value="0.19947916666666668" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/layout/activity_main.xml" value="0.2994791666666667" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/layout/fragment_account.xml" value="0.4083333333333333" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/layout/fragment_farvorite.xml" value="0.42239583333333336" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/layout/fragment_home.xml" value="0.42239583333333336" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/layout/fragment_login_tab.xml" value="0.1" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/layout/fragment_personal_list.xml" value="0.4083333333333333" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/layout/fragment_signup_tab.xml" value="0.19947916666666668" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/layout/item_recycler_category_shimmer.xml" value="0.22826086956521738" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/layout/item_view_pager_header_shimmer.xml" value="0.25" />
-        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_app/app/src/main/res/menu/menu_bottom_nav.xml" value="0.42239583333333336" />
       </map>
     </option>
   </component>
