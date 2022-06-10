@@ -36,10 +36,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
+import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.adapter.LoginAdapter;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.User;
 import com.nmuddd.foodrecipeapp.view.home.HomeActivity;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -163,7 +166,10 @@ public class LoginActivity extends AppCompatActivity {
                         CurrentUser.idUser = dataSnapshot.getValue(User.class).getIdUser();
                         CurrentUser.email = dataSnapshot.getValue(User.class).getEmail();
                         CurrentUser.password = dataSnapshot.getValue(User.class).getPassword();
-                        CurrentUser.strMealFavorite = dataSnapshot.getValue(User.class).getIdMealFavorite();
+                        if (dataSnapshot.getValue(User.class).getMealFavorite() != null)
+                            CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
+                        else
+                            CurrentUser.mealFavorite = new ArrayList<>();
                     }
                 }
             }

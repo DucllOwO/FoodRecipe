@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,9 +60,7 @@ public class CategoryFragment extends Fragment implements CategoryView {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);/*
-
-        repository = new FavoriteRepository(getActivity().getApplication());*/
+        super.onViewCreated(view, savedInstanceState);
 
         if (getArguments() != null) {
             textCategory.setText(getArguments().getString("EXTRA_DATA_DESC"));
@@ -92,8 +91,8 @@ public class CategoryFragment extends Fragment implements CategoryView {
 
     @Override
     public void setMeals(List<Meal> meals) {
-        /*RecyclerViewMealByCategoryAdapter adapter =
-                new RecyclerViewMealByCategoryAdapter(getActivity(), meals, repository);
+        RecyclerViewMealByCategoryAdapter adapter =
+                new RecyclerViewMealByCategoryAdapter(getActivity(), meals);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setClipToPadding(false);
         recyclerView.setAdapter(adapter);
@@ -104,7 +103,8 @@ public class CategoryFragment extends Fragment implements CategoryView {
             Intent intent = new Intent(getActivity(), DetailActivity.class);
             intent.putExtra(EXTRA_DETAIL, mealName.getText().toString());
             startActivity(intent);
-        });*/
+            getActivity().getFragmentManager().popBackStack();
+        });
     }
 
     @Override
@@ -117,5 +117,9 @@ public class CategoryFragment extends Fragment implements CategoryView {
         descDialog.setPositiveButton("CLOSE", (dialog, which) -> dialog.dismiss());
         descDialog.show();
     }
-    
+
+    @Override
+    public void displayToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 }

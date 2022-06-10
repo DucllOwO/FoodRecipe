@@ -92,7 +92,7 @@ public class SignupTabFragment extends Fragment {
                                                         user.setIdUser(mAuth.getUid());
                                                         user.setEmail(email_et.getText().toString());
                                                         user.setPassword(password_et.getText().toString());
-                                                        user.setIdMealFavorite(null);
+                                                        user.setMealFavorite(null);
                                                         Task<Void> taskAddUser = firebase.dbReference.child(firebase.tableNameUser).push().setValue(user);
                                                         taskAddUser.addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override

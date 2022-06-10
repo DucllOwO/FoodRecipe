@@ -9,4 +9,5 @@ public interface CategoryView {
     void hideLoading();
     void setMeals(List<Meal> meals);
     void onErrorLoading(String message);
+    void displayToast(String messsage);
 }

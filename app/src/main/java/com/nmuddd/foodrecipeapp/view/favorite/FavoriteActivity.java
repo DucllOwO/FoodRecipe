@@ -5,6 +5,7 @@ import static com.nmuddd.foodrecipeapp.view.home.HomeActivity.EXTRA_DETAIL;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,15 +52,18 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteView 
 
     @Override
     public void setFavoriteList(List<Meal> mealFavorite) {
-        RecyclerViewMealFavoriteAdapter adapter = new RecyclerViewMealFavoriteAdapter(this, mealFavorite);
-        recyclerView.setAdapter(adapter);
+        if (mealFavorite != null) {
+            RecyclerViewMealFavoriteAdapter adapter = new RecyclerViewMealFavoriteAdapter(this, mealFavorite);
+            recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener((view, position) -> {
-            TextView strMealName = view.findViewById(R.id.mealName);
-            Intent intent = new Intent(this, DetailActivity.class);
-            intent.putExtra(EXTRA_DETAIL, strMealName.getText().toString());
-            startActivity(intent);
-        });
+            adapter.setOnItemClickListener((view, position) -> {
+                TextView strMealName = view.findViewById(R.id.mealName);
+                Intent intent = new Intent(this, DetailActivity.class);
+                intent.putExtra(EXTRA_DETAIL, strMealName.getText().toString());
+                startActivity(intent);
+                finish();
+            });
+        }
     }
 
     @Override
@@ -83,4 +87,5 @@ public class FavoriteActivity extends AppCompatActivity implements FavoriteView 
     public void displayToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
+
 }

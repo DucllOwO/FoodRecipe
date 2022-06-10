@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.Meal;
+import com.nmuddd.foodrecipeapp.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,28 +26,22 @@ class FavoritePresenter {
     }
 
     void getMealFavorite() {
-        Query query = firebase.dbReference.child(firebase.tableNameMeal);
+        Query query = firebase.dbReference.child("User").orderByChild("idUser").equalTo(CurrentUser.idUser);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     List<Meal> meals = new ArrayList<>();
-                    for (DataSnapshot meal : snapshot.getChildren()) {
-                        for (String idMeal : CurrentUser.strMealFavorite) {
-                            if (idMeal.equals(meal.getValue(Meal.class).getIdMeal())) {
-                                meals.add(meal.getValue(Meal.class));
-                                break;
-                            }
-                        }
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        meals = dataSnapshot.getValue(User.class).getMealFavorite();
                     }
-                    CurrentUser.mealFavorite = meals;
                     view.setFavoriteList(meals);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                view.displayToast(error.getMessage());
+
             }
         });
     }

@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
 import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.adapter.RecyclerViewSearchItemAdapter;
 import com.nmuddd.foodrecipeapp.database.Firebase;
@@ -101,7 +102,6 @@ class HomePresenter {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //view.setCategory(ca);
                 if (snapshot.exists()) {
                     view.hideLoading();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -118,8 +118,6 @@ class HomePresenter {
         });
 
     }
-
-
 
 }
 

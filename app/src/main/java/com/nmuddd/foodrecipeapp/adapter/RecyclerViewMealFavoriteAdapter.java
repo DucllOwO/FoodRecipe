@@ -16,11 +16,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
+import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.Meal;
 import com.nmuddd.foodrecipeapp.model.User;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -45,6 +47,7 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
         View view = LayoutInflater.from(context).inflate(R.layout.item_recycler_meal,
                 viewGroup, false);
         firebase = new Firebase();
+        getMealFavorite();
         return new RecyclerViewHolder(view);
     }
 
@@ -57,28 +60,99 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
         String strMealName = meals.get(i).getStrMeal();
         viewHolder.mealName.setText(strMealName);
 
-        if (isFavorite(strMealName)) {
-            viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
-        } else {
-            viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
-        }
 
+
+        getMealFavorite();
+        if (strMealName != null && CurrentUser.mealFavorite != null) {
+            for (Meal meal : CurrentUser.mealFavorite) {
+                if (meal.getStrMeal().equals(strMealName)) {
+                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
+                    break;
+                } else
+                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
+            }
+        }
         viewHolder.love.setOnClickListener(v -> {
             addOrRemoveToFavorite(meals.get(i), viewHolder);
         });
     }
 
-    private boolean isFavorite(String strMealName) {
-        if (strMealName != null) {
-            for (Meal meal : CurrentUser.mealFavorite) {
-                if (meal.getStrMeal().equals(strMealName))
-                    return true;
+    private void getMealFavorite() {
+        Query query = firebase.dbReference.child(firebase.tableNameUser).orderByChild("idUser").equalTo(CurrentUser.idUser);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot user : snapshot.getChildren()) {
+                        CurrentUser.mealFavorite = user.getValue(User.class).getMealFavorite();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        }
-        return false;
+        });
     }
 
+    private void addOrRemoveToFavorite(Meal meal, RecyclerViewHolder viewHolder) {
+        Query query = firebase.dbReference.child(firebase.tableNameUser).orderByChild("idUser").equalTo(CurrentUser.idUser);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        User user = new User();
+                        user.setIdUser(dataSnapshot.getValue(User.class).getIdUser());
+                        user.setEmail(dataSnapshot.getValue(User.class).getEmail());
+                        user.setPassword(dataSnapshot.getValue(User.class).getPassword());
+                        if (dataSnapshot.getValue(User.class).getMealFavorite() != null)
+                        {
+                            user.setMealFavorite(dataSnapshot.getValue(User.class).getMealFavorite());
+                            CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
+                        }
+                        else {
+                            List<Meal> meals = new ArrayList<>();
+                            user.setMealFavorite(meals);
+                        }
+                        if (user != null && user.getMealFavorite() != null) {
+                            Boolean hasFavorite = false;
+                            for (Meal meal1 : user.getMealFavorite()) {
+                                if (meal.getIdMeal().equals(meal1.getIdMeal())) {
+                                    hasFavorite = true;
+                                    user.getMealFavorite().remove(meal1);
+                                    break;
+                                }
+                            }
+                            if (hasFavorite) {
+                                dataSnapshot.getRef().setValue(user);
+                                viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
+
+                            } else {
+                                user.getMealFavorite().add(meal);
+                                dataSnapshot.getRef().setValue(user);
+                                viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
+
+                            }
+                        } else
+                        {
+                            user.getMealFavorite().add(meal);
+                            dataSnapshot.getRef().setValue(user);
+                            viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
 
     @Override
     public int getItemCount() {
@@ -114,51 +188,6 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
         void onClick(View view, int position);
     }
 
-    private void addOrRemoveToFavorite(Meal meal, RecyclerViewHolder viewHolder) {
-        Query query = firebase.dbReference.child(firebase.tableNameUser).orderByChild("idUser").equalTo(CurrentUser.idUser);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        User user = new User();
-                        user.setIdUser(dataSnapshot.getValue(User.class).getIdUser());
-                        user.setEmail(dataSnapshot.getValue(User.class).getEmail());
-                        user.setPassword(dataSnapshot.getValue(User.class).getPassword());
-                        user.setIdMealFavorite(dataSnapshot.getValue(User.class).getIdMealFavorite());
-                        if (user != null && user.getIdMealFavorite() != null) {
-                            Boolean hasFavorite = false;
-                            for (String idmeal : user.getIdMealFavorite()) {
-                                if (meal.getIdMeal().equals(idmeal)) {
-                                    hasFavorite = true;
-                                    user.getIdMealFavorite().remove(meal.getIdMeal());
-                                    break;
-                                }
-                            }
-                            if (hasFavorite) {
-                                dataSnapshot.getRef().setValue(user);
-                                viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
-                            } else {
-                                user.getIdMealFavorite().add(meal.getIdMeal());
-                                dataSnapshot.getRef().setValue(user);
-                                viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
-                            }
-                        } else
-                        {
-                            user.getIdMealFavorite().add(meal.getIdMeal());
-                            dataSnapshot.getRef().setValue(user);
-                            viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
-                        }
-                    }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 
 }

@@ -19,16 +19,16 @@ public class User implements Serializable {
     private String password;
     @SerializedName("idMealFavorite")
     @Expose
-    private List<String> idMealFavorite;
+    private List<Meal> mealFavorite;
 
     public User() {
     }
 
-    public User(String idUser, String email, String password, List<String> idMealFavorite) {
+    public User(String idUser, String email, String password, List<Meal> mealFavorite) {
         this.idUser = idUser;
         this.email = email;
         this.password = password;
-        this.idMealFavorite = idMealFavorite;
+        this.mealFavorite = mealFavorite;
     }
 
     public String getIdUser() {
@@ -55,11 +55,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public List<String> getIdMealFavorite() {
-        return idMealFavorite;
+    public List<Meal> getMealFavorite() {
+        return mealFavorite;
     }
 
-    public void setIdMealFavorite(List<String> idMealFavorite) {
-        this.idMealFavorite = idMealFavorite;
+    public void setMealFavorite(List<Meal> mealFavorite) {
+        this.mealFavorite = mealFavorite;
     }
 }
+

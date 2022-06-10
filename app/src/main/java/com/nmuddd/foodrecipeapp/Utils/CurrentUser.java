@@ -9,7 +9,6 @@ public class CurrentUser {
     public static String idUser;
     public static String email;
     public static String password;
-    public static List<String> strMealFavorite;
     public static List<Meal> mealFavorite;
     public CurrentUser() {
 

@@ -87,7 +87,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     Firebase firebase;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
-    private Meal meal;
+    public Meal meal;
     MenuItem favoriteItem;
     String strMealName;
 
@@ -108,6 +108,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         DetailPresenter presenter = new DetailPresenter(this, getApplicationContext());
 
         presenter.getMealById(strMealName);
+        setFavoriteItem();
 
     }
 
@@ -173,13 +174,21 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
                         user.setIdUser(dataSnapshot.getValue(User.class).getIdUser());
                         user.setEmail(dataSnapshot.getValue(User.class).getEmail());
                         user.setPassword(dataSnapshot.getValue(User.class).getPassword());
-                        user.setIdMealFavorite(dataSnapshot.getValue(User.class).getIdMealFavorite());
-                        if (user != null && user.getIdMealFavorite() != null) {
+                        if (dataSnapshot.getValue(User.class).getMealFavorite() != null)
+                        {
+                            user.setMealFavorite(dataSnapshot.getValue(User.class).getMealFavorite());
+                            CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
+                        }
+                        else {
+                            List<Meal> meals = new ArrayList<>();
+                            user.setMealFavorite(meals);
+                        }
+                        if (user != null && user.getMealFavorite() != null) {
                             Boolean hasFavorite = false;
-                            for (String idmeal : user.getIdMealFavorite()) {
-                                if (meal.getIdMeal().equals(idmeal)) {
+                            for (Meal meal1 : user.getMealFavorite()) {
+                                if (meal.getIdMeal().equals(meal1.getIdMeal())) {
                                     hasFavorite = true;
-                                    user.getIdMealFavorite().remove(meal.getIdMeal());
+                                    user.getMealFavorite().remove(meal1);
                                     break;
                                 }
                             }
@@ -187,13 +196,13 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
                                 dataSnapshot.getRef().setValue(user);
                                 favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite_border));
                             } else {
-                                user.getIdMealFavorite().add(meal.getIdMeal());
+                                user.getMealFavorite().add(meal);
                                 dataSnapshot.getRef().setValue(user);
                                 favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
                             }
                         } else
                         {
-                            user.getIdMealFavorite().add(meal.getIdMeal());
+                            user.getMealFavorite().add(meal);
                             dataSnapshot.getRef().setValue(user);
                             favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
                         }
@@ -206,7 +215,6 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
 
             }
         });
-
     }
 
     private void setFavoriteItem() {
@@ -217,13 +225,13 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User user = new User();
-                        user.setIdUser(dataSnapshot.getValue(User.class).getIdUser());
-                        user.setEmail(dataSnapshot.getValue(User.class).getEmail());
-                        user.setPassword(dataSnapshot.getValue(User.class).getPassword());
-                        user.setIdMealFavorite(dataSnapshot.getValue(User.class).getIdMealFavorite());
-                        if (user != null && user.getIdMealFavorite() != null) {
-                            for (String idmeal : user.getIdMealFavorite()) {
-                                if (Objects.equals(meal.getIdMeal(), idmeal)) {
+                        if (dataSnapshot.getValue(User.class).getMealFavorite() != null)
+                            user.setMealFavorite(dataSnapshot.getValue(User.class).getMealFavorite());
+                        else
+                            user.setMealFavorite(new ArrayList<>());
+                        if (user != null && user.getMealFavorite() != null) {
+                            for (Meal meal1 : user.getMealFavorite()) {
+                                if (Objects.equals(meal, meal1)) {
                                     favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
                                     break;
                                 } else {
@@ -413,6 +421,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finish();
     }
 
     @Override

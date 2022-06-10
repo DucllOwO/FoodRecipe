@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         setupUI(findViewById(R.id.homeActivity));
         favorite.setOnClickListener(v -> {
             startActivity(new Intent(this, FavoriteActivity.class));
+            finish();
         });
         presenter = new HomePresenter(this);
         presenter.getRandomMeals();
@@ -130,6 +131,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
             Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
             intent.putExtra(EXTRA_DETAIL, mealName.getText().toString());
             startActivity(intent);
+            finish();
         });
     }
 
@@ -149,6 +151,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
                 intent.putExtra(EXTRA_DETAIL, recyclerViewSearchItemAdapter.getMeal(positionMeal).getStrMeal());
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -168,6 +171,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
             intent.putExtra(EXTRA_CATEGORY, (Serializable) category);
             intent.putExtra(EXTRA_POSITION, position);
             startActivity(intent);
+            finish();
         });
     }
 
