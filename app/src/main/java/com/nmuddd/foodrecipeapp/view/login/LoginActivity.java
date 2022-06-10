@@ -29,9 +29,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 import com.nmuddd.foodrecipeapp.R;
+import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
 import com.nmuddd.foodrecipeapp.adapter.LoginAdapter;
+import com.nmuddd.foodrecipeapp.database.Firebase;
+import com.nmuddd.foodrecipeapp.model.User;
 import com.nmuddd.foodrecipeapp.view.home.HomeActivity;
 
 import butterknife.BindView;
@@ -55,13 +62,13 @@ public class LoginActivity extends AppCompatActivity {
     float v = 0;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
-
+    private Firebase firebase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
+        firebase = new Firebase();
         setupUI();
         mAuth = FirebaseAuth.getInstance();
 
@@ -140,7 +147,30 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            getCurrenUser();
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
         }
+    }
+
+    private void getCurrenUser() {
+        Query query = firebase.dbReference.child(firebase.tableNameUser).orderByChild("idUser")
+                .equalTo(mAuth.getCurrentUser().getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        CurrentUser.idUser = dataSnapshot.getValue(User.class).getIdUser();
+                        CurrentUser.email = dataSnapshot.getValue(User.class).getEmail();
+                        CurrentUser.password = dataSnapshot.getValue(User.class).getPassword();
+                        CurrentUser.strMealFavorite = dataSnapshot.getValue(User.class).getIdMealFavorite();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

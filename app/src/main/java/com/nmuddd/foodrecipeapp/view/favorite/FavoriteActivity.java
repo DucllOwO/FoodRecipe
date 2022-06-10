@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.adapter.RecyclerViewMealFavoriteAdapter;
+import com.nmuddd.foodrecipeapp.model.Meal;
 import com.nmuddd.foodrecipeapp.view.detail.DetailActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FavoriteActivity extends AppCompatActivity {
+public class FavoriteActivity extends AppCompatActivity implements FavoriteView {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -43,9 +47,11 @@ public class FavoriteActivity extends AppCompatActivity {
         recyclerView.setClipToPadding(false);
         
     }
-    
-    void getFavoriteList() {
-        /*RecyclerViewMealFavoriteAdapter adapter = new RecyclerViewMealFavoriteAdapter(this, repository.select(), repository);
+
+
+    @Override
+    public void setFavoriteList(List<Meal> mealFavorite) {
+        RecyclerViewMealFavoriteAdapter adapter = new RecyclerViewMealFavoriteAdapter(this, mealFavorite);
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener((view, position) -> {
@@ -53,7 +59,7 @@ public class FavoriteActivity extends AppCompatActivity {
             Intent intent = new Intent(this, DetailActivity.class);
             intent.putExtra(EXTRA_DETAIL, strMealName.getText().toString());
             startActivity(intent);
-        });*/
+        });
     }
 
     @Override
@@ -69,6 +75,12 @@ public class FavoriteActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        getFavoriteList();
+        FavoritePresenter favoritePresenter = new FavoritePresenter(this);
+        favoritePresenter.getMealFavorite();
+    }
+
+    @Override
+    public void displayToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

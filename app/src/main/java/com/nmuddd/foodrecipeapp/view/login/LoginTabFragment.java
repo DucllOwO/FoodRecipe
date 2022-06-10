@@ -17,8 +17,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
+import com.nmuddd.foodrecipeapp.database.Firebase;
+import com.nmuddd.foodrecipeapp.model.User;
 import com.nmuddd.foodrecipeapp.view.home.HomeActivity;
 
 public class LoginTabFragment extends Fragment {
@@ -38,27 +44,10 @@ public class LoginTabFragment extends Fragment {
         email_et = root.findViewById(R.id.email_login_edit_text);
         password_et = root.findViewById(R.id.password_login_edit_text);
         forgot_password = root.findViewById(R.id.forgot_password);
-        login_button = root.findViewById(R.id.button_login);/*
-
-        email_et.setTranslationY(300);
-        password_et.setTranslationY(300);
-        forgot_password.setTranslationY(300);
-        login_button.setTranslationY(300);
-
-        email_et.setAlpha(v);
-        password_et.setAlpha(v);
-        forgot_password.setAlpha(v);
-        login_button.setAlpha(v);
-
-        email_et.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
-        password_et.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
-        forgot_password.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();
-        login_button.animate().translationY(0).alpha(1).setDuration(1000).setStartDelay(400).start();*/
+        login_button = root.findViewById(R.id.button_login);
 
         setupLogin();
 
-        //setupAnimate();
-        // Inflate the layout for this fragment
         return root;
     }
 
@@ -77,7 +66,7 @@ public class LoginTabFragment extends Fragment {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful())
                                         if (mAuth.getCurrentUser().isEmailVerified()) {
-                                            CurrentUser currentUser = new CurrentUser(mAuth.getCurrentUser());
+                                            Toast.makeText(getContext(), "Login Successfully", Toast.LENGTH_LONG).show();
                                             startActivity(new Intent(getContext(), HomeActivity.class));
                                         }
 
