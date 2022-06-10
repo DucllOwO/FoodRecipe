@@ -41,6 +41,7 @@ import com.nmuddd.foodrecipeapp.model.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -174,31 +175,25 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
                         user.setPassword(dataSnapshot.getValue(User.class).getPassword());
                         user.setIdMealFavorite(dataSnapshot.getValue(User.class).getIdMealFavorite());
                         if (user != null && user.getIdMealFavorite() != null) {
+                            Boolean hasFavorite = false;
                             for (String idmeal : user.getIdMealFavorite()) {
-                                // remove
-                                if (meal.getIdMeal() == idmeal) {
-                                    dataSnapshot.getRef().removeValue(new DatabaseReference.CompletionListener() {
-                                        @Override
-                                        public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                            favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite_border));
-                                            displayToast("Delete from favorite");
-                                        }
-                                    });
+                                if (meal.getIdMeal().equals(idmeal)) {
+                                    hasFavorite = true;
+                                    user.getIdMealFavorite().remove(meal.getIdMeal());
                                     break;
-                                } else {
-                                    // add
-                                    List<String> meals = new ArrayList<>();
-                                    meals.add(meal.getIdMeal());
-                                    user.setIdMealFavorite(meals);
-                                    dataSnapshot.getRef().setValue(user);
-                                    favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
                                 }
+                            }
+                            if (hasFavorite) {
+                                dataSnapshot.getRef().setValue(user);
+                                favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite_border));
+                            } else {
+                                user.getIdMealFavorite().add(meal.getIdMeal());
+                                dataSnapshot.getRef().setValue(user);
+                                favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
                             }
                         } else
                         {
-                            List<String> meals = new ArrayList<>();
-                            meals.add(meal.getIdMeal());
-                            user.setIdMealFavorite(meals);
+                            user.getIdMealFavorite().add(meal.getIdMeal());
                             dataSnapshot.getRef().setValue(user);
                             favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
                         }
