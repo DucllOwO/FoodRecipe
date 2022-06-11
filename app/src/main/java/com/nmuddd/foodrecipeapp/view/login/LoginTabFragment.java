@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,7 +32,7 @@ import com.nmuddd.foodrecipeapp.view.MainActivity;
 
 import java.util.ArrayList;
 
-public class LoginTabFragment extends Fragment {
+public class LoginTabFragment extends Fragment implements View.OnClickListener {
 
     EditText email_et;
     EditText password_et;
@@ -39,6 +41,7 @@ public class LoginTabFragment extends Fragment {
     float v = 0;
     Firebase firebase;
     private FirebaseAuth mAuth;
+    FragmentManager fragmentManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -48,6 +51,9 @@ public class LoginTabFragment extends Fragment {
         password_et = root.findViewById(R.id.password_login_edit_text);
         forgot_password = root.findViewById(R.id.forgot_password);
         login_button = root.findViewById(R.id.button_login);
+        fragmentManager = getParentFragmentManager();
+
+        forgot_password.setOnClickListener(this);
 
         setupLogin();
 
@@ -105,5 +111,23 @@ public class LoginTabFragment extends Fragment {
                             });
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.forgot_password:
+                ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
+
+                FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                //fragmentTransaction.remove()
+                fragmentTransaction.setReorderingAllowed(true).replace(R.id.fragment_container_login_forgot, forgotPasswordFragment);
+                fragmentTransaction.addToBackStack(null);
+
+                fragmentTransaction.commit();
+                break;
+            default:
+                break;
+        }
     }
 }

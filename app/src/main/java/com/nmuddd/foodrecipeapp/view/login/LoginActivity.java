@@ -4,11 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -47,7 +52,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
     private static final int RC_SIGN_IN = 123;
     @BindView(R.id.login_viewPager)
     ViewPager viewPager;
@@ -62,6 +67,12 @@ public class LoginActivity extends AppCompatActivity {
 
     @BindView(R.id.fab_google)
     FloatingActionButton google_button;
+
+    Button backButton;
+
+    TextView forgotPasswordTV;
+    FragmentManager fragmentManager;
+
     float v = 0;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
@@ -76,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         setupGoogleAuth();
+
 
 
     }
@@ -179,4 +191,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 }
