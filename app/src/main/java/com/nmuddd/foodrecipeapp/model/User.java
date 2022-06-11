@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Serializable {
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
     @SerializedName("idUser")
     @Expose
     private String idUser;
@@ -17,9 +20,14 @@ public class User implements Serializable {
     @SerializedName("password")
     @Expose
     private String password;
-    @SerializedName("idMealFavorite")
+    @SerializedName("mealFavorite")
     @Expose
     private List<Meal> mealFavorite;
+    @SerializedName("myMeal")
+    @Expose
+    private List<Meal> myMeal;
+
+
 
     public User() {
     }
@@ -61,6 +69,22 @@ public class User implements Serializable {
 
     public void setMealFavorite(List<Meal> mealFavorite) {
         this.mealFavorite = mealFavorite;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public List<Meal> getMyMeal() {
+        return myMeal;
+    }
+
+    public void setMyMeal(List<Meal> myMeal) {
+        this.myMeal = myMeal;
     }
 }
 

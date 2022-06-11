@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.SuccessContinuation;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -54,6 +56,7 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity{
     private static final int RC_SIGN_IN = 123;
+    public static final String EXTRA_LOGIN_GOOGLE = "google";
     @BindView(R.id.login_viewPager)
     ViewPager viewPager;
     @BindView(R.id.tab_layout_login)
@@ -64,9 +67,6 @@ public class LoginActivity extends AppCompatActivity{
 
     @BindView(R.id.lottie)
     LottieAnimationView lottie;
-
-    @BindView(R.id.fab_google)
-    FloatingActionButton google_button;
 
     Button backButton;
 
@@ -86,57 +86,6 @@ public class LoginActivity extends AppCompatActivity{
         setupUI();
         mAuth = FirebaseAuth.getInstance();
 
-        setupGoogleAuth();
-
-
-
-    }
-
-    private void setupGoogleAuth() {
-        createRequest();
-
-        GoogleSignInAccount gsa = GoogleSignIn.getLastSignedInAccount(this);
-        if (gsa != null) {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }
-
-        google_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signin();
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                task.getResult(ApiException.class);
-                finish();
-                startActivity(new Intent(this, MainActivity.class));
-
-            } catch (ApiException e) {
-                Toast.makeText(getApplicationContext(), "Login fail!!!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void signin() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    private void createRequest() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     private void setupUI() {
@@ -164,6 +113,7 @@ public class LoginActivity extends AppCompatActivity{
         if (currentUser != null) {
             getCurrenUser();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
         }
     }
 
@@ -175,13 +125,7 @@ public class LoginActivity extends AppCompatActivity{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        CurrentUser.idUser = dataSnapshot.getValue(User.class).getIdUser();
-                        CurrentUser.email = dataSnapshot.getValue(User.class).getEmail();
-                        CurrentUser.password = dataSnapshot.getValue(User.class).getPassword();
-                        if (dataSnapshot.getValue(User.class).getMealFavorite() != null)
-                            CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
-                        else
-                            CurrentUser.mealFavorite = new ArrayList<>();
+                        getCurrentUserData(dataSnapshot);
                     }
                 }
             }
@@ -190,6 +134,21 @@ public class LoginActivity extends AppCompatActivity{
 
             }
         });
+    }
+
+    private void getCurrentUserData(DataSnapshot dataSnapshot) {
+        CurrentUser.idUser = dataSnapshot.getValue(User.class).getIdUser();
+        CurrentUser.email = dataSnapshot.getValue(User.class).getEmail();
+        CurrentUser.password = dataSnapshot.getValue(User.class).getPassword();
+        CurrentUser.avatar = dataSnapshot.getValue(User.class).getAvatar();
+        if (dataSnapshot.getValue(User.class).getMealFavorite() != null)
+            CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
+        else
+            CurrentUser.mealFavorite = new ArrayList<>();
+        if (dataSnapshot.getValue(User.class).getMyMeal() != null)
+            CurrentUser.myMeal = dataSnapshot.getValue(User.class).getMyMeal();
+        else
+            CurrentUser.myMeal = new ArrayList<>();
     }
 
 }

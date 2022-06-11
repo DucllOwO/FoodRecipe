@@ -118,18 +118,7 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        User user = new User();
-                        user.setIdUser(dataSnapshot.getValue(User.class).getIdUser());
-                        user.setEmail(dataSnapshot.getValue(User.class).getEmail());
-                        user.setPassword(dataSnapshot.getValue(User.class).getPassword());
-                        if (dataSnapshot.getValue(User.class).getMealFavorite() != null) {
-                            user.setMealFavorite(dataSnapshot.getValue(User.class).getMealFavorite());
-                            CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
-                        }
-                        else {
-                            List<Meal> meals = new ArrayList<>();
-                            user.setMealFavorite(meals);
-                        }
+                        User user = getUser(dataSnapshot);
 
                         if (user != null && user.getMealFavorite() != null) {
                             Boolean hasFavorite = false;
@@ -165,6 +154,34 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
         });
 
     }
+
+    @NonNull
+    private User getUser(DataSnapshot dataSnapshot) {
+        User user = new User();
+        user.setIdUser(dataSnapshot.getValue(User.class).getIdUser());
+        user.setEmail(dataSnapshot.getValue(User.class).getEmail());
+        user.setPassword(dataSnapshot.getValue(User.class).getPassword());
+        user.setAvatar(dataSnapshot.getValue(User.class).getAvatar());
+        if (dataSnapshot.getValue(User.class).getMealFavorite() != null) {
+            user.setMealFavorite(dataSnapshot.getValue(User.class).getMealFavorite());
+            CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
+        }
+        else {
+            List<Meal> meals = new ArrayList<>();
+            user.setMealFavorite(meals);
+        }
+
+        if (dataSnapshot.getValue(User.class).getMyMeal() != null) {
+            user.setMyMeal(dataSnapshot.getValue(User.class).getMyMeal());
+            CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMyMeal();
+        }
+        else {
+            List<Meal> meals = new ArrayList<>();
+            user.setMyMeal(meals);
+        }
+        return user;
+    }
+
     private void getMealFavorite() {
         Query query = firebase.dbReference.child(firebase.tableNameUser).orderByChild("idUser").equalTo(CurrentUser.idUser);
         query.addListenerForSingleValueEvent(new ValueEventListener() {

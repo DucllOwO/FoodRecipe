@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +33,14 @@ public class SignupTabFragment extends Fragment {
     Button signup_button;
     Firebase firebase;
     private FirebaseAuth mAuth;
+    ProgressBar progressBar;
     float v = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_signup_tab, container, false);
 
+        progressBar = root.findViewById(R.id.progress_bar_signup);
         email_et = root.findViewById(R.id.email_signup_edit_text);
         password_et = root.findViewById(R.id.password_signup_edit_text);
         repassword_et = root.findViewById(R.id.repassword_edit_text);
@@ -56,6 +59,7 @@ public class SignupTabFragment extends Fragment {
         signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 if (email_et.getText().toString() == "" || password_et.getText().toString() == "" ||
                         repassword_et.getText().toString() == "")
                     Toast.makeText(getContext(), "Input information!!!", Toast.LENGTH_SHORT).show();
@@ -78,10 +82,13 @@ public class SignupTabFragment extends Fragment {
                                                                 user.setEmail(email_et.getText().toString());
                                                                 user.setPassword(password_et.getText().toString());
                                                                 user.setMealFavorite(null);
+                                                                user.setAvatar("");
+                                                                user.setMyMeal(null);
                                                                 Task<Void> taskAddUser = firebase.dbReference.child(firebase.tableNameUser).push().setValue(user);
                                                                 taskAddUser.addOnCompleteListener(new OnCompleteListener<Void>() {
                                                                     @Override
                                                                     public void onComplete(@NonNull Task<Void> task) {
+                                                                        progressBar.setVisibility(View.GONE);
                                                                         Toast.makeText(getContext(), "Resistered successfully. Please check your email for activation", Toast.LENGTH_LONG).show();
                                                                         email_et.setText("");
                                                                         password_et.setText("");

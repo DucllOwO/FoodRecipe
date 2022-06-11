@@ -9,6 +9,8 @@ public class CurrentUser {
     public static String email;
     public static String password;
     public static List<Meal> mealFavorite;
+    public static List<Meal> myMeal;
+    public static String avatar;
     public CurrentUser() {
 
     }

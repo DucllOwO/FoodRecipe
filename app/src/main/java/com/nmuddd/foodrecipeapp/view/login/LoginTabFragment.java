@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,11 +43,13 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener {
     Firebase firebase;
     private FirebaseAuth mAuth;
     FragmentManager fragmentManager;
+    ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_login_tab, container, false);
         firebase = new Firebase();
+        progressBar = root.findViewById(R.id.progress_bar_login);
         email_et = root.findViewById(R.id.email_login_edit_text);
         password_et = root.findViewById(R.id.password_login_edit_text);
         forgot_password = root.findViewById(R.id.forgot_password);
@@ -66,6 +69,7 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 if (email_et.getText().toString() == "" || password_et.getText().toString() == "")
                     Toast.makeText(getContext(), "Input information!!!", Toast.LENGTH_SHORT).show();
                 else
@@ -75,7 +79,6 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful())
                                         if (mAuth.getCurrentUser().isEmailVerified()) {
-
                                             Query query = firebase.dbReference.child(firebase.tableNameUser).orderByChild("idUser")
                                                     .equalTo(mAuth.getCurrentUser().getUid());
                                             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,21 +86,16 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener {
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                     if (snapshot.exists()) {
                                                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                                            CurrentUser.idUser = dataSnapshot.getValue(User.class).getIdUser();
-                                                            CurrentUser.email = dataSnapshot.getValue(User.class).getEmail();
-                                                            CurrentUser.password = dataSnapshot.getValue(User.class).getPassword();
-                                                            if (dataSnapshot.getValue(User.class).getMealFavorite() != null)
-                                                                CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
-                                                            else
-                                                                CurrentUser.mealFavorite = new ArrayList<>();
+                                                            getCurrentUserData(dataSnapshot);
                                                             Toast.makeText(getContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
+                                                            progressBar.setVisibility(View.GONE);
                                                             startActivity(new Intent(getContext(), MainActivity.class));
                                                         }
                                                     }
                                                 }
                                                 @Override
                                                 public void onCancelled(@NonNull DatabaseError error) {
-
+                                                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                                                 }
                                             });
 
@@ -113,6 +111,21 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    private void getCurrentUserData(DataSnapshot dataSnapshot) {
+        CurrentUser.idUser = dataSnapshot.getValue(User.class).getIdUser();
+        CurrentUser.email = dataSnapshot.getValue(User.class).getEmail();
+        CurrentUser.password = dataSnapshot.getValue(User.class).getPassword();
+        CurrentUser.avatar = dataSnapshot.getValue(User.class).getAvatar();
+        if (dataSnapshot.getValue(User.class).getMealFavorite() != null)
+            CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
+        else
+            CurrentUser.mealFavorite = new ArrayList<>();
+        if (dataSnapshot.getValue(User.class).getMyMeal() != null)
+            CurrentUser.myMeal = dataSnapshot.getValue(User.class).getMyMeal();
+        else
+            CurrentUser.myMeal = new ArrayList<>();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -120,7 +133,6 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener {
                 ForgotPasswordFragment forgotPasswordFragment = new ForgotPasswordFragment();
 
                 FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
-                //fragmentTransaction.remove()
                 fragmentTransaction.setReorderingAllowed(true).replace(R.id.fragment_container_login_forgot, forgotPasswordFragment);
                 fragmentTransaction.addToBackStack(null);
 
