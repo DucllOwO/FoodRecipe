@@ -123,7 +123,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp" />
 
-            <include android:id="@+id/shimmerCategory"
+            <include
+                android:id="@+id/shimmerCategory"
                 layout="@layout/item_recycler_category_shimmer" />
 
         </RelativeLayout>

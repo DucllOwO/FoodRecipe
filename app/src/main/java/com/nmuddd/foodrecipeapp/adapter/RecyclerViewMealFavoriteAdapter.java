@@ -47,7 +47,6 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
         View view = LayoutInflater.from(context).inflate(R.layout.item_recycler_meal,
                 viewGroup, false);
         firebase = new Firebase();
-        getMealFavorite();
         return new RecyclerViewHolder(view);
     }
 

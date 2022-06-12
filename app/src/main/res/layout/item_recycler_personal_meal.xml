@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -30,9 +28,9 @@
             android:layout_height="90dp"/>
 
         <ImageView
-            android:id="@+id/love"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/edit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginStart="10dp"
@@ -42,11 +40,11 @@
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
-            android:src="@drawable/ic_favorite_border"
+            android:src="@drawable/ic_baseline_edit_24"
             app:tint="@color/colorAccent"
             tools:ignore="NewApi" />
         <TextView
-            android:text="@string/meal_categories"
+            android:text="Personal Meal"
             android:textSize="16sp"
             android:textColor="@color/colorPrimaryText"
             android:gravity="center"

@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountFragment extends Fragment implements View.OnClickListener {
-    private static final int PICK_IMAGE_REQUEST = 234;
+    public static final int PICK_IMAGE_REQUEST = 234;
     private View view;
     ImageView avatar;
     Button upload_btn;
@@ -203,8 +203,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
                             });
                             //displaying success toast
                             Toast.makeText(getContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
-
-
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -236,7 +234,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         user.setAvatar(avatarURL);
         if (CurrentUser.mealFavorite != null) {
             user.setMealFavorite(CurrentUser.mealFavorite);
-            CurrentUser.mealFavorite = CurrentUser.mealFavorite;
         }
         else {
             List<Meal> meals = new ArrayList<>();
@@ -245,7 +242,6 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 
         if (CurrentUser.myMeal != null) {
             user.setMyMeal(CurrentUser.myMeal);
-            CurrentUser.mealFavorite = CurrentUser.myMeal;
         }
         else {
             List<Meal> meals = new ArrayList<>();
