@@ -16,7 +16,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
-import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.Meal;
 import com.nmuddd.foodrecipeapp.model.User;
@@ -34,6 +33,7 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
     private Context context;
     private static ClickListener clickListener;
     private Firebase firebase;
+
     public RecyclerViewMealByCategoryAdapter(Context context, List<Meal> meals) {
         this.meals = meals;
         this.context = context;
@@ -89,6 +89,7 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
         TextView mealName;
         @BindView(R.id.love)
         ImageView love;
+
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -137,8 +138,7 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
                                 dataSnapshot.getRef().setValue(user);
                                 viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
                             }
-                        } else
-                        {
+                        } else {
                             user.getMealFavorite().add(meal);
                             dataSnapshot.getRef().setValue(user);
                             viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
@@ -165,8 +165,7 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
         if (dataSnapshot.getValue(User.class).getMealFavorite() != null) {
             user.setMealFavorite(dataSnapshot.getValue(User.class).getMealFavorite());
             CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
-        }
-        else {
+        } else {
             List<Meal> meals = new ArrayList<>();
             user.setMealFavorite(meals);
         }
@@ -174,8 +173,7 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
         if (dataSnapshot.getValue(User.class).getMyMeal() != null) {
             user.setMyMeal(dataSnapshot.getValue(User.class).getMyMeal());
             CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMyMeal();
-        }
-        else {
+        } else {
             List<Meal> meals = new ArrayList<>();
             user.setMyMeal(meals);
         }
@@ -200,6 +198,7 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
             }
         });
     }
+
     private boolean isFavorite(String strMealName) {
         getMealFavorite();
         if (strMealName != null && CurrentUser.mealFavorite != null) {

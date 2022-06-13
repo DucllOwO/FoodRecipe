@@ -1,10 +1,5 @@
 package com.nmuddd.foodrecipeapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -23,6 +18,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -329,10 +329,10 @@ public class EditMealActivity extends AppCompatActivity implements View.OnClickL
                 listMeasureItemET.remove(i);
                 continue;
             } else if (listIngredientItemET.get(i).getText().toString().isEmpty()) {
-                displayAlertDialog("Please enter ingredient " + (i+1));
+                displayAlertDialog("Please enter ingredient " + (i + 1));
                 return false;
             } else if (listMeasureItemET.get(i).getText().toString().isEmpty()) {
-                displayAlertDialog("Please enter measure " + (i+1));
+                displayAlertDialog("Please enter measure " + (i + 1));
                 return false;
             }
         }
@@ -428,6 +428,7 @@ public class EditMealActivity extends AppCompatActivity implements View.OnClickL
                                                 startActivity(intent);
                                             }
                                         }
+
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError error) {
                                         }
@@ -437,12 +438,12 @@ public class EditMealActivity extends AppCompatActivity implements View.OnClickL
                             });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    })
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
@@ -451,7 +452,7 @@ public class EditMealActivity extends AppCompatActivity implements View.OnClickL
                             progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                         }
                     });
-        }else {
+        } else {
             //display an error if no file is selected
             Toast.makeText(getApplicationContext(), "Please select a image file", Toast.LENGTH_LONG).show();
         }
@@ -528,15 +529,13 @@ public class EditMealActivity extends AppCompatActivity implements View.OnClickL
         user.setAvatar(CurrentUser.avatar);
         if (CurrentUser.mealFavorite != null) {
             user.setMealFavorite(CurrentUser.mealFavorite);
-        }
-        else {
+        } else {
             List<Meal> meals = new ArrayList<>();
             user.setMealFavorite(meals);
         }
 
         for (int i = 0; i < CurrentUser.myMeal.size(); i++) {
-            if (meal1.getIdMeal().equals(CurrentUser.myMeal.get(i).getIdMeal()))
-            {
+            if (meal1.getIdMeal().equals(CurrentUser.myMeal.get(i).getIdMeal())) {
                 CurrentUser.myMeal.set(i, meal1);
                 break;
             }

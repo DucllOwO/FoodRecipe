@@ -2,12 +2,9 @@ package com.nmuddd.foodrecipeapp.view.home;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +45,7 @@ public class HomeFragment extends Fragment implements HomeView {
     RecyclerView recyclerSearchItem;
     HomePresenter presenter;
     SearchView searchView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,12 +60,10 @@ public class HomeFragment extends Fragment implements HomeView {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                if (!s.isEmpty())
-                {
+                if (!s.isEmpty()) {
                     recyclerSearchItem.setVisibility(View.VISIBLE);
                     presenter.getMealsByName(s);
-                }
-                else
+                } else
                     recyclerSearchItem.setVisibility(View.GONE);
                 return true;
             }
@@ -85,7 +81,6 @@ public class HomeFragment extends Fragment implements HomeView {
         presenter = new HomePresenter(this);
         presenter.getRandomMeals();
         presenter.getCategories();
-
 
 
         return view;
@@ -113,7 +108,6 @@ public class HomeFragment extends Fragment implements HomeView {
     }*/
 
 
-
     @Override
     public void setMeal(List<Meal> meal) {
         ViewPagerHeaderAdapter headerAdapter = new ViewPagerHeaderAdapter(meal, getContext());
@@ -131,7 +125,7 @@ public class HomeFragment extends Fragment implements HomeView {
 
     @Override
     public void setMealSearchItem(List<Meal> meal) {
-        RecyclerViewSearchItemAdapter recyclerViewSearchItemAdapter = new RecyclerViewSearchItemAdapter(getContext(),  meal);
+        RecyclerViewSearchItemAdapter recyclerViewSearchItemAdapter = new RecyclerViewSearchItemAdapter(getContext(), meal);
         //Log.i("AAA", presenter.getMealsByName("beef").toString());
         recyclerSearchItem.setAdapter(recyclerViewSearchItemAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

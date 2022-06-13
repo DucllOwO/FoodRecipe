@@ -29,6 +29,7 @@ public class PersonalListFragment extends Fragment implements PersonalListView {
     FloatingActionButton openAddBtn;
     RecyclerView recyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

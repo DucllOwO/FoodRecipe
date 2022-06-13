@@ -16,7 +16,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
-import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.Meal;
 import com.nmuddd.foodrecipeapp.model.User;
@@ -24,7 +23,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,7 +56,6 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
 
         String strMealName = meals.get(i).getStrMeal();
         viewHolder.mealName.setText(strMealName);
-
 
 
         getMealFavorite();
@@ -122,8 +119,7 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
                                 viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
 
                             }
-                        } else
-                        {
+                        } else {
                             user.getMealFavorite().add(meal);
                             dataSnapshot.getRef().setValue(user);
                             viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
@@ -151,8 +147,7 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
         if (dataSnapshot.getValue(User.class).getMealFavorite() != null) {
             user.setMealFavorite(dataSnapshot.getValue(User.class).getMealFavorite());
             CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
-        }
-        else {
+        } else {
             List<Meal> meals = new ArrayList<>();
             user.setMealFavorite(meals);
         }
@@ -160,8 +155,7 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
         if (dataSnapshot.getValue(User.class).getMyMeal() != null) {
             user.setMyMeal(dataSnapshot.getValue(User.class).getMyMeal());
             CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMyMeal();
-        }
-        else {
+        } else {
             List<Meal> meals = new ArrayList<>();
             user.setMyMeal(meals);
         }
@@ -180,6 +174,7 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
         TextView mealName;
         @BindView(R.id.love)
         ImageView love;
+
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -201,7 +196,6 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
     public interface ClickListener {
         void onClick(View view, int position);
     }
-
 
 
 }

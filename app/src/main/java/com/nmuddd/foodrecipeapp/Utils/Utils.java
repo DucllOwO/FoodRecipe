@@ -1,13 +1,7 @@
 package com.nmuddd.foodrecipeapp.Utils;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.view.inputmethod.InputMethodManager;
-
-import androidx.fragment.app.Fragment;
-
-import com.nmuddd.foodrecipeapp.view.home.HomeFragment;
 
 
 public class Utils {

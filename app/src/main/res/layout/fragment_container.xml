@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.login.ContainerFragment">
-     <FrameLayout
-         android:id="@+id/fragment_container_login_forgot"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent">
 
-     </FrameLayout>
+    <FrameLayout
+        android:id="@+id/fragment_container_login_forgot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
 </FrameLayout>

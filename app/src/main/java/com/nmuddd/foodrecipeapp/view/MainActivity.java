@@ -1,9 +1,7 @@
 package com.nmuddd.foodrecipeapp.view;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,8 +12,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.adapter.ViewPagerMainAdapter;
-
-import butterknife.BindView;
 
 public class MainActivity extends AppCompatActivity {
 

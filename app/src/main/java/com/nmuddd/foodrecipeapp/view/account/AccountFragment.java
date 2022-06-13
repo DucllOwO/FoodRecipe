@@ -64,6 +64,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     TextView emailTV;
     TextView numOfFavoriteTV;
     TextView numofYourRecipeTV;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -186,7 +187,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if (snapshot.exists()) {
-                                                for (DataSnapshot userSnapshot: snapshot.getChildren()) {
+                                                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
                                                     userSnapshot.getRef().setValue(setUser(uri.toString()));
                                                     CurrentUser.avatar = userSnapshot.getValue(User.class).getAvatar();
                                                 }
@@ -234,16 +235,14 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
         user.setAvatar(avatarURL);
         if (CurrentUser.mealFavorite != null) {
             user.setMealFavorite(CurrentUser.mealFavorite);
-        }
-        else {
+        } else {
             List<Meal> meals = new ArrayList<>();
             user.setMealFavorite(meals);
         }
 
         if (CurrentUser.myMeal != null) {
             user.setMyMeal(CurrentUser.myMeal);
-        }
-        else {
+        } else {
             List<Meal> meals = new ArrayList<>();
             user.setMyMeal(meals);
         }
@@ -337,8 +336,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 
                                     AlertDialog alert1 = builder1.create();
                                     alert1.show();
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG);
                                 }
                             }

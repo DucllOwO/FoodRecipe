@@ -6,8 +6,12 @@ import java.util.List;
 
 public interface CategoryView {
     void showLoading();
+
     void hideLoading();
+
     void setMeals(List<Meal> meals);
+
     void onErrorLoading(String message);
+
     void displayToast(String messsage);
 }

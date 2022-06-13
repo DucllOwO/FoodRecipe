@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class User implements Serializable {
@@ -26,7 +25,6 @@ public class User implements Serializable {
     @SerializedName("myMeal")
     @Expose
     private List<Meal> myMeal;
-
 
 
     public User() {

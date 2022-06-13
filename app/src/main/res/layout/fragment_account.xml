@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -17,30 +15,31 @@
         app:cardCornerRadius="10dp"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp">
+
         <ImageView
             android:id="@+id/user_avatar"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/ic_sharp_face_24"/>
+            android:src="@drawable/ic_sharp_face_24" />
+
         <ProgressBar
             android:id="@+id/progress_bar_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:indeterminate="true"
-            android:visibility="visible"/>
+            android:visibility="visible" />
     </androidx.cardview.widget.CardView>
 
 
-        <Button
-            android:id="@+id/upload_iamge"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Upload your image"
-            android:padding="10dp"
-            android:background="@drawable/button_background"/>
-
+    <Button
+        android:id="@+id/upload_iamge"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Upload your image"
+        android:padding="10dp"
+        android:background="@drawable/button_background" />
 
 
     <TextView
@@ -52,8 +51,7 @@
         android:textSize="20dp"
         android:textColor="@color/colorPrimaryText"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
-        />
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:layout_gravity="center"
@@ -64,7 +62,7 @@
         android:textSize="20dp"
         android:textColor="@color/colorPrimaryText"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:layout_gravity="center"
@@ -75,7 +73,7 @@
         android:textSize="20dp"
         android:textColor="@color/colorPrimaryText"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp" />
 
     <Button
         android:layout_gravity="center"
@@ -86,7 +84,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:padding="10dp"
-        android:background="@drawable/button_background"/>
+        android:background="@drawable/button_background" />
 
     <Button
         android:layout_gravity="center"
@@ -99,8 +97,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
         android:padding="10dp"
-        android:background="@drawable/button_background"/>
-
+        android:background="@drawable/button_background" />
 
 
 </LinearLayout>

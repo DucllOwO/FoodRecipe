@@ -26,7 +26,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
-import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.User;
 import com.nmuddd.foodrecipeapp.view.MainActivity;
@@ -44,6 +43,7 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener {
     private FirebaseAuth mAuth;
     FragmentManager fragmentManager;
     ProgressBar progressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -93,15 +93,14 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener {
                                                         }
                                                     }
                                                 }
+
                                                 @Override
                                                 public void onCancelled(@NonNull DatabaseError error) {
                                                     Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                                                 }
                                             });
 
-                                        }
-
-                                        else
+                                        } else
                                             Toast.makeText(getContext(), "Please verify your email address", Toast.LENGTH_LONG).show();
                                     else
                                         Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();

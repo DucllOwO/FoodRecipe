@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecyclerViewPersonalMealAdapter extends RecyclerView.Adapter<RecyclerViewPersonalMealAdapter.RecyclerViewHolder>{
+public class RecyclerViewPersonalMealAdapter extends RecyclerView.Adapter<RecyclerViewPersonalMealAdapter.RecyclerViewHolder> {
 
 
     private List<Meal> meals;
@@ -33,6 +33,7 @@ public class RecyclerViewPersonalMealAdapter extends RecyclerView.Adapter<Recycl
         this.context = context;
 
     }
+
     @NonNull
     @Override
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -63,6 +64,7 @@ public class RecyclerViewPersonalMealAdapter extends RecyclerView.Adapter<Recycl
         ImageView mealThumb;
         @BindView(R.id.mealName)
         TextView mealName;
+
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

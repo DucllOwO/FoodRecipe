@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.nmuddd.foodrecipeapp.view.login.ContainerFragment;
-import com.nmuddd.foodrecipeapp.view.login.LoginTabFragment;
 import com.nmuddd.foodrecipeapp.view.login.SignupTabFragment;
 
 public class LoginAdapter extends FragmentPagerAdapter {

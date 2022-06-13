@@ -1,4 +1,3 @@
-
 package com.nmuddd.foodrecipeapp.view.category;
 
 import static com.nmuddd.foodrecipeapp.view.home.HomeFragment.EXTRA_DETAIL;

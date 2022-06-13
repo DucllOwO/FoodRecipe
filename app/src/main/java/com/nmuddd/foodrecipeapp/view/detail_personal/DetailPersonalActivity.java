@@ -1,10 +1,5 @@
 package com.nmuddd.foodrecipeapp.view.detail_personal;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +11,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -215,44 +215,44 @@ public class DetailPersonalActivity extends AppCompatActivity implements DetailP
             if (meal.getStrIngredient16() != null) {
                 ingredients.append("\n \u2022 " + meal.getStrIngredient16());
             }
-            if ( meal.getStrIngredient17() != null ) {
+            if (meal.getStrIngredient17() != null) {
                 ingredients.append("\n \u2022 " + meal.getStrIngredient17());
             }
-            if (meal.getStrIngredient18() != null ) {
+            if (meal.getStrIngredient18() != null) {
                 ingredients.append("\n \u2022 " + meal.getStrIngredient18());
             }
-            if (meal.getStrIngredient19() != null ) {
+            if (meal.getStrIngredient19() != null) {
                 ingredients.append("\n \u2022 " + meal.getStrIngredient19());
             }
-            if (meal.getStrIngredient20() != null ) {
+            if (meal.getStrIngredient20() != null) {
                 ingredients.append("\n \u2022 " + meal.getStrIngredient20());
             }
 
             if (meal.getStrMeasure1() != null) {
                 measures.append("\n : " + meal.getStrMeasure1());
             }
-            if ( meal.getStrMeasure2() != null) {
+            if (meal.getStrMeasure2() != null) {
                 measures.append("\n : " + meal.getStrMeasure2());
             }
-            if ( meal.getStrMeasure3() != null) {
+            if (meal.getStrMeasure3() != null) {
                 measures.append("\n : " + meal.getStrMeasure3());
             }
             if (meal.getStrMeasure4() != null) {
                 measures.append("\n : " + meal.getStrMeasure4());
             }
-            if ( meal.getStrMeasure5() != null) {
+            if (meal.getStrMeasure5() != null) {
                 measures.append("\n : " + meal.getStrMeasure5());
             }
             if (meal.getStrMeasure6() != null) {
                 measures.append("\n : " + meal.getStrMeasure6());
             }
-            if ( meal.getStrMeasure7() != null) {
+            if (meal.getStrMeasure7() != null) {
                 measures.append("\n : " + meal.getStrMeasure7());
             }
             if (meal.getStrMeasure8() != null) {
                 measures.append("\n : " + meal.getStrMeasure8());
             }
-            if ( meal.getStrMeasure9() != null) {
+            if (meal.getStrMeasure9() != null) {
                 measures.append("\n : " + meal.getStrMeasure9());
             }
             if (meal.getStrMeasure10() != null) {
@@ -261,31 +261,31 @@ public class DetailPersonalActivity extends AppCompatActivity implements DetailP
             if (meal.getStrMeasure11() != null) {
                 measures.append("\n : " + meal.getStrMeasure11());
             }
-            if ( meal.getStrMeasure12() != null) {
+            if (meal.getStrMeasure12() != null) {
                 measures.append("\n : " + meal.getStrMeasure12());
             }
-            if ( meal.getStrMeasure13() != null) {
+            if (meal.getStrMeasure13() != null) {
                 measures.append("\n : " + meal.getStrMeasure13());
             }
-            if ( meal.getStrMeasure14() != null) {
+            if (meal.getStrMeasure14() != null) {
                 measures.append("\n : " + meal.getStrMeasure14());
             }
-            if ( meal.getStrMeasure15() != null) {
+            if (meal.getStrMeasure15() != null) {
                 measures.append("\n : " + meal.getStrMeasure15());
             }
-            if ( meal.getStrMeasure16() != null) {
+            if (meal.getStrMeasure16() != null) {
                 measures.append("\n : " + meal.getStrMeasure16());
             }
-            if ( meal.getStrMeasure17() != null) {
+            if (meal.getStrMeasure17() != null) {
                 measures.append("\n : " + meal.getStrMeasure17());
             }
-            if ( meal.getStrMeasure18() != null) {
+            if (meal.getStrMeasure18() != null) {
                 measures.append("\n : " + meal.getStrMeasure18());
             }
-            if ( meal.getStrMeasure19() != null) {
+            if (meal.getStrMeasure19() != null) {
                 measures.append("\n : " + meal.getStrMeasure19());
             }
-            if ( meal.getStrMeasure20() != null) {
+            if (meal.getStrMeasure20() != null) {
                 measures.append("\n : " + meal.getStrMeasure20());
             }
         }
@@ -312,6 +312,7 @@ public class DetailPersonalActivity extends AppCompatActivity implements DetailP
         String mime = MimeTypeMap.getFileExtensionFromUrl(url);
         return mime;
     }
+
     @Override
     public void displayAlertYESNO(String alertMessage) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -332,7 +333,7 @@ public class DetailPersonalActivity extends AppCompatActivity implements DetailP
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 if (snapshot.exists()) {
-                                    for (DataSnapshot user: snapshot.getChildren()) {
+                                    for (DataSnapshot user : snapshot.getChildren()) {
                                         for (int i = 0; i < CurrentUser.myMeal.size(); i++) {
                                             if (meal.getIdMeal().equals(CurrentUser.myMeal.get(i).getIdMeal()))
                                                 CurrentUser.myMeal.remove(i);

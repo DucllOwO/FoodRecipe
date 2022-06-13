@@ -1,43 +1,30 @@
 package com.nmuddd.foodrecipeapp.view.home;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.room.Dao;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
-import com.nmuddd.foodrecipeapp.Utils.Utils;
-import com.nmuddd.foodrecipeapp.adapter.RecyclerViewSearchItemAdapter;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.Category;
 import com.nmuddd.foodrecipeapp.model.Meal;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 import java.util.regex.Pattern;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 class HomePresenter {
 
     Firebase firebase;
     private HomeView view;
+
     public HomePresenter(HomeView view) {
         firebase = new Firebase();
         this.view = view;
     }
+
     // get random meal
     void getRandomMeals() {
 

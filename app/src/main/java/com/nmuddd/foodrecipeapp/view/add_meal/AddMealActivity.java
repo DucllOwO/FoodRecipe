@@ -1,11 +1,5 @@
 package com.nmuddd.foodrecipeapp.view.add_meal;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -25,6 +19,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,8 +50,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddMealActivity extends AppCompatActivity implements View.OnClickListener {
-    ArrayList<EditText> listIngredientItemET=new ArrayList<>(20);
-    ArrayList<EditText> listMeasureItemET=new ArrayList<>(20);
+    ArrayList<EditText> listIngredientItemET = new ArrayList<>(20);
+    ArrayList<EditText> listMeasureItemET = new ArrayList<>(20);
     EditText category;
     EditText country;
     EditText instructions;
@@ -71,6 +70,7 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
     LinearLayout measureLinearLayout;
     ProgressBar progressBar;
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -239,10 +239,10 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
                 listMeasureItemET.remove(i);
                 continue;
             } else if (listIngredientItemET.get(i).getText().toString().isEmpty()) {
-                displayAlertDialog("Please enter ingredient " + (i+1));
+                displayAlertDialog("Please enter ingredient " + (i + 1));
                 return false;
             } else if (listMeasureItemET.get(i).getText().toString().isEmpty()) {
-                displayAlertDialog("Please enter measure " + (i+1));
+                displayAlertDialog("Please enter measure " + (i + 1));
                 return false;
             }
         }
@@ -316,6 +316,7 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
                                                 onBackPressed();
                                             }
                                         }
+
                                         @Override
                                         public void onCancelled(@NonNull DatabaseError error) {
                                         }
@@ -325,12 +326,12 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
                             });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            progressDialog.dismiss();
-                            Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    })
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    progressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
@@ -339,7 +340,7 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
                             progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                         }
                     });
-        }else {
+        } else {
             //display an error if no file is selected
             Toast.makeText(getApplicationContext(), "Please select a image file", Toast.LENGTH_LONG).show();
         }
@@ -416,8 +417,7 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
         user.setAvatar(CurrentUser.avatar);
         if (CurrentUser.mealFavorite != null) {
             user.setMealFavorite(CurrentUser.mealFavorite);
-        }
-        else {
+        } else {
             List<Meal> meals = new ArrayList<>();
             user.setMealFavorite(meals);
         }
@@ -425,8 +425,7 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
         if (CurrentUser.myMeal != null) {
             CurrentUser.myMeal.add(meal);
             user.setMyMeal(CurrentUser.myMeal);
-        }
-        else {
+        } else {
             List<Meal> meals = new ArrayList<>();
             meals.add(meal);
             user.setMyMeal(meals);

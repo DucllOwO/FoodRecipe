@@ -1,4 +1,3 @@
-
 package com.nmuddd.foodrecipeapp.view.detail;
 
 import android.content.Intent;
@@ -6,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ViewCompat;
@@ -27,7 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nmuddd.foodrecipeapp.R;
@@ -40,9 +36,7 @@ import com.nmuddd.foodrecipeapp.view.home.HomeFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -152,7 +146,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home :
+            case android.R.id.home:
                 onBackPressed();
                 return true;
             case R.id.favorite:
@@ -174,12 +168,10 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
                         user.setIdUser(dataSnapshot.getValue(User.class).getIdUser());
                         user.setEmail(dataSnapshot.getValue(User.class).getEmail());
                         user.setPassword(dataSnapshot.getValue(User.class).getPassword());
-                        if (dataSnapshot.getValue(User.class).getMealFavorite() != null)
-                        {
+                        if (dataSnapshot.getValue(User.class).getMealFavorite() != null) {
                             user.setMealFavorite(dataSnapshot.getValue(User.class).getMealFavorite());
                             CurrentUser.mealFavorite = dataSnapshot.getValue(User.class).getMealFavorite();
-                        }
-                        else {
+                        } else {
                             List<Meal> meals = new ArrayList<>();
                             user.setMealFavorite(meals);
                         }
@@ -200,8 +192,7 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
                                 dataSnapshot.getRef().setValue(user);
                                 favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
                             }
-                        } else
-                        {
+                        } else {
                             user.getMealFavorite().add(meal);
                             dataSnapshot.getRef().setValue(user);
                             favoriteItem.setIcon(getResources().getDrawable(R.drawable.ic_favorite));
@@ -323,44 +314,44 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
             if (meal.getStrIngredient16() != null) {
                 ingredients.append("\n \u2022 " + meal.getStrIngredient16());
             }
-            if ( meal.getStrIngredient17() != null ) {
+            if (meal.getStrIngredient17() != null) {
                 ingredients.append("\n \u2022 " + meal.getStrIngredient17());
             }
-            if (meal.getStrIngredient18() != null ) {
+            if (meal.getStrIngredient18() != null) {
                 ingredients.append("\n \u2022 " + meal.getStrIngredient18());
             }
-            if (meal.getStrIngredient19() != null ) {
+            if (meal.getStrIngredient19() != null) {
                 ingredients.append("\n \u2022 " + meal.getStrIngredient19());
             }
-            if (meal.getStrIngredient20() != null ) {
+            if (meal.getStrIngredient20() != null) {
                 ingredients.append("\n \u2022 " + meal.getStrIngredient20());
             }
 
             if (meal.getStrMeasure1() != null) {
                 measures.append("\n : " + meal.getStrMeasure1());
             }
-            if ( meal.getStrMeasure2() != null) {
+            if (meal.getStrMeasure2() != null) {
                 measures.append("\n : " + meal.getStrMeasure2());
             }
-            if ( meal.getStrMeasure3() != null) {
+            if (meal.getStrMeasure3() != null) {
                 measures.append("\n : " + meal.getStrMeasure3());
             }
             if (meal.getStrMeasure4() != null) {
                 measures.append("\n : " + meal.getStrMeasure4());
             }
-            if ( meal.getStrMeasure5() != null) {
+            if (meal.getStrMeasure5() != null) {
                 measures.append("\n : " + meal.getStrMeasure5());
             }
             if (meal.getStrMeasure6() != null) {
                 measures.append("\n : " + meal.getStrMeasure6());
             }
-            if ( meal.getStrMeasure7() != null) {
+            if (meal.getStrMeasure7() != null) {
                 measures.append("\n : " + meal.getStrMeasure7());
             }
             if (meal.getStrMeasure8() != null) {
                 measures.append("\n : " + meal.getStrMeasure8());
             }
-            if ( meal.getStrMeasure9() != null) {
+            if (meal.getStrMeasure9() != null) {
                 measures.append("\n : " + meal.getStrMeasure9());
             }
             if (meal.getStrMeasure10() != null) {
@@ -369,31 +360,31 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
             if (meal.getStrMeasure11() != null) {
                 measures.append("\n : " + meal.getStrMeasure11());
             }
-            if ( meal.getStrMeasure12() != null) {
+            if (meal.getStrMeasure12() != null) {
                 measures.append("\n : " + meal.getStrMeasure12());
             }
-            if ( meal.getStrMeasure13() != null) {
+            if (meal.getStrMeasure13() != null) {
                 measures.append("\n : " + meal.getStrMeasure13());
             }
-            if ( meal.getStrMeasure14() != null) {
+            if (meal.getStrMeasure14() != null) {
                 measures.append("\n : " + meal.getStrMeasure14());
             }
-            if ( meal.getStrMeasure15() != null) {
+            if (meal.getStrMeasure15() != null) {
                 measures.append("\n : " + meal.getStrMeasure15());
             }
-            if ( meal.getStrMeasure16() != null) {
+            if (meal.getStrMeasure16() != null) {
                 measures.append("\n : " + meal.getStrMeasure16());
             }
-            if ( meal.getStrMeasure17() != null) {
+            if (meal.getStrMeasure17() != null) {
                 measures.append("\n : " + meal.getStrMeasure17());
             }
-            if ( meal.getStrMeasure18() != null) {
+            if (meal.getStrMeasure18() != null) {
                 measures.append("\n : " + meal.getStrMeasure18());
             }
-            if ( meal.getStrMeasure19() != null) {
+            if (meal.getStrMeasure19() != null) {
                 measures.append("\n : " + meal.getStrMeasure19());
             }
-            if ( meal.getStrMeasure20() != null) {
+            if (meal.getStrMeasure20() != null) {
                 measures.append("\n : " + meal.getStrMeasure20());
             }
 

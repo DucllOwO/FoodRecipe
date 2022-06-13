@@ -1,7 +1,6 @@
 package com.nmuddd.foodrecipeapp.view.detail;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -9,18 +8,14 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.Meal;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DetailPresenter {
     private DetailView view;
     private Context context;
     Firebase firebase;
+
     public DetailPresenter(DetailView view, Context applicationContext) {
         this.view = view;
         this.context = applicationContext;

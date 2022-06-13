@@ -3,7 +3,6 @@ package com.nmuddd.foodrecipeapp.view.favorite;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -25,8 +24,6 @@ import com.nmuddd.foodrecipeapp.view.home.HomeFragment;
 
 import java.util.List;
 
-import butterknife.BindView;
-
 public class FavoriteFragment extends Fragment implements FavoriteView {
 
     private View view;
@@ -34,6 +31,7 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
     Toolbar toolbar;
     FavoriteView favoriteView;
     SwipeRefreshLayout swipeRefreshLayout;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,7 +40,6 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
         recyclerView = view.findViewById(R.id.recyclerView);
         toolbar = view.findViewById(R.id.toolbar);
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh);
-
 
 
         FavoritePresenter favoritePresenter = new FavoritePresenter(this);
