@@ -1,6 +1,10 @@
-package com.nmuddd.foodrecipeapp.view.personal_list;
+package com.nmuddd.foodrecipeapp.view.add_meal;
 
-import static android.app.Activity.RESULT_OK;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
@@ -9,14 +13,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.provider.MediaStore;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -51,8 +50,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class AddMealFragment extends Fragment implements View.OnClickListener {
+public class AddMealActivity extends AppCompatActivity implements View.OnClickListener {
     ArrayList<EditText> listIngredientItemET=new ArrayList<>(20);
     ArrayList<EditText> listMeasureItemET=new ArrayList<>(20);
     EditText category;
@@ -72,49 +70,68 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
     LinearLayout ingredientLinearLayout;
     LinearLayout measureLinearLayout;
     ProgressBar progressBar;
+    Toolbar toolbar;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_meal, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_meal);
 
         firebaseStorageInstance = new FirebaseStorageInstance();
         firebase = new Firebase();
 
-        createRecipe = view.findViewById(R.id.create_recipe_btn);
-        addItem = view.findViewById(R.id.add_item_button);
-        ingredientLinearLayout = view.findViewById(R.id.ingredient_list);
-        measureLinearLayout = view.findViewById(R.id.measure_list);
-        collapsingToolbarLayout = view.findViewById(R.id.collapsing_toolbar);
-        appBarLayout = view.findViewById(R.id.appbar);
-        mealThumb = view.findViewById(R.id.mealThumb);
-        category = view.findViewById(R.id.category);
-        country = view.findViewById(R.id.country);
-        instructions = view.findViewById(R.id.instructions);
-        mealName = view.findViewById(R.id.meal_name_et);
-        uploadImage = view.findViewById(R.id.upload_image_create_recipe);
-        subtractItem = view.findViewById(R.id.delete_item_button);
+        createRecipe = findViewById(R.id.create_recipe_btn);
+        addItem = findViewById(R.id.add_item_button);
+        ingredientLinearLayout = findViewById(R.id.ingredient_list);
+        measureLinearLayout = findViewById(R.id.measure_list);
+        collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
+        appBarLayout = findViewById(R.id.appbar);
+        mealThumb = findViewById(R.id.mealThumb);
+        category = findViewById(R.id.category);
+        country = findViewById(R.id.country);
+        instructions = findViewById(R.id.instructions);
+        mealName = findViewById(R.id.meal_name_et);
+        uploadImage = findViewById(R.id.upload_image_create_recipe);
+        subtractItem = findViewById(R.id.delete_item_button);
+        toolbar = findViewById(R.id.toolbar);
 
-
+        setupActionBar();
         addItem.setOnClickListener(this);
         uploadImage.setOnClickListener(this);
         createRecipe.setOnClickListener(this);
         subtractItem.setOnClickListener(this);
-
-        setupActionBar();
-
-        return view;
     }
 
     private void setupActionBar() {
+        setSupportActionBar(toolbar);
+        collapsingToolbarLayout.setTitle("");
         collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.colorWhite));
         collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.colorPrimary));
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorWhite));
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_add_meal, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
     private void displayAlertDialog(String alertMessage) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Alert");
         builder.setMessage(alertMessage);
@@ -131,7 +148,7 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
     }
 
     private void addEditTextMeasureToLayout() {
-        EditText editTextMeasure = new EditText(getContext());
+        EditText editTextMeasure = new EditText(this);
         editTextMeasure.setHint("Enter measure " + (listMeasureItemET.size() + 1));
         editTextMeasure.setTextSize(14);
         editTextMeasure.setHeight(200);
@@ -141,7 +158,7 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
     }
 
     private void addEditTextIngredientToLayout() {
-        EditText editTextIngredient = new EditText(getContext());
+        EditText editTextIngredient = new EditText(this);
         editTextIngredient.setHint("Enter ingredient " + (listIngredientItemET.size() + 1));
         editTextIngredient.setTextSize(14);
         editTextIngredient.setHeight(200);
@@ -215,7 +232,7 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
         }
         for (int i = 0; i < listIngredientItemET.size(); i++) {
             if (listIngredientItemET.get(i).getText().toString().isEmpty()
-            && listMeasureItemET.get(i).getText().toString().isEmpty()) {
+                    && listMeasureItemET.get(i).getText().toString().isEmpty()) {
                 ingredientLinearLayout.removeView(listIngredientItemET.get(i));
                 measureLinearLayout.removeView(listMeasureItemET.get(i));
                 listIngredientItemET.remove(i);
@@ -240,7 +257,7 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
     }
 
     public String getFileExtension(Uri uri) {
-        ContentResolver cR = getActivity().getApplicationContext().getContentResolver();
+        ContentResolver cR = getApplicationContext().getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
@@ -251,10 +268,10 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
         if (requestCode == AccountFragment.PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getApplicationContext().getContentResolver(), filePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), filePath);
                 mealThumb.setImageBitmap(bitmap);
             } catch (IOException e) {
-                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT);
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT);
             }
         }
     }
@@ -266,14 +283,14 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
     private void uploadImageToStorageAndDatabase() {
         if (filePath != null) {
             //displaying progress dialog while image is uploading
-            final ProgressDialog progressDialog = new ProgressDialog(getContext());
+            final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading");
             progressDialog.show();
 
             //getting the storage reference
-
+            String idMeal = Long.toString(System.currentTimeMillis());
             StorageReference storageReference = firebaseStorageInstance.firebaseStorage
-                    .child(FirebaseStorageInstance.STORAGE_PATH_UPLOADS + CurrentUser.idUser + System.currentTimeMillis() + "." + getFileExtension(filePath));
+                    .child(FirebaseStorageInstance.STORAGE_PATH_UPLOADS + CurrentUser.idUser + idMeal + "." + getFileExtension(filePath));
 
 
             //adding the file to reference
@@ -284,35 +301,34 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
                             //dismissing the progress dialog
                             progressDialog.dismiss();
                             storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        Query query = firebase.dbReference.child(firebase.tableNameUser)
-                                                .orderByChild("idUser").equalTo(CurrentUser.idUser);
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Query query = firebase.dbReference.child(firebase.tableNameUser)
+                                            .orderByChild("idUser").equalTo(CurrentUser.idUser);
 
-                                        query.addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                if (snapshot.exists()) {
-                                                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                                                        userSnapshot.getRef().setValue(setUser(createMeal(uri)));
-                                                    }
-                                                    FragmentManager fragmentManager = getParentFragmentManager();
-                                                    fragmentManager.popBackStack();
+                                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.exists()) {
+                                                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                                                    userSnapshot.getRef().setValue(setUser(createMeal(uri, idMeal)));
                                                 }
+                                                onBackPressed();
                                             }
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-                                            }
-                                        });
-                                        Toast.makeText(getContext(), "Upload Successfully", Toast.LENGTH_SHORT);
-                                    }
-                                });
+                                        }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                        }
+                                    });
+                                    Toast.makeText(getApplicationContext(), "Upload Successfully", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             progressDialog.dismiss();
-                            Toast.makeText(getContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), exception.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -325,16 +341,17 @@ public class AddMealFragment extends Fragment implements View.OnClickListener {
                     });
         }else {
             //display an error if no file is selected
-            Toast.makeText(getContext(), "Please select a image file", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Please select a image file", Toast.LENGTH_LONG).show();
         }
 
     }
 
-    private Meal createMeal(Uri uri) {
+    private Meal createMeal(Uri uri, String idMeal) {
         Meal meal = new Meal();
         meal.setStrMealThumb(uri.toString());
         meal.setStrMeal(mealName.getText().toString());
-        meal.setIdMeal(Long.toString(System.currentTimeMillis()));
+        meal.setIdMeal(idMeal);
+        meal.setStrInstructions(instructions.getText().toString());
         meal.setStrArea(country.getText().toString());
         meal.setStrCategory(category.getText().toString());
         meal.setDateModified(LocalDateTime.now().toString());

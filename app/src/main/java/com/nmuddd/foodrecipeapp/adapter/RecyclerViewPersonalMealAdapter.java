@@ -1,9 +1,6 @@
 package com.nmuddd.foodrecipeapp.adapter;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.Meal;
-import com.nmuddd.foodrecipeapp.view.detail.DetailActivity;
-import com.nmuddd.foodrecipeapp.view.home.HomeFragment;
-import com.nmuddd.foodrecipeapp.view.personal_list.AddMealFragment;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -60,14 +51,6 @@ public class RecyclerViewPersonalMealAdapter extends RecyclerView.Adapter<Recycl
         String strMealName = meals.get(pos).getStrMeal();
         holder.mealName.setText(strMealName);
 
-        holder.edit.setOnClickListener(v -> {
-            AddMealFragment addMealFragment = new AddMealFragment();
-            AppCompatActivity activity = (AppCompatActivity) v.getContext();
-            FragmentTransaction fragmentTransaction = activity.getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.setReorderingAllowed(true).replace(R.id.fragment_personal_list, addMealFragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        });
     }
 
     @Override
@@ -80,8 +63,6 @@ public class RecyclerViewPersonalMealAdapter extends RecyclerView.Adapter<Recycl
         ImageView mealThumb;
         @BindView(R.id.mealName)
         TextView mealName;
-        @BindView(R.id.edit)
-        ImageView edit;
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

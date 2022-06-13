@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Program/Android/sdk/platforms/android-31/data/res/layout/auto_complete_list.xml" value="0.2234375" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/drawable-hdpi/button_background.xml" value="0.2165" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/drawable-hdpi/edit_text_background.xml" value="0.2165" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/drawable-hdpi/viewpager_background.xml" value="0.2165" />
@@ -28,10 +29,14 @@
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/drawable/line_shape.xml" value="0.2165" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/drawable/shadow.xml" value="0.2165" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/drawable/shadow_bottom_to_top.xml" value="0.2165" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/activity_add_meal.xml" value="0.20625" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/activity_category.xml" value="0.2234375" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/activity_detail.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/activity_detail_personal.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/activity_edit_meal.xml" value="0.2234375" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_account.xml" value="0.4" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_add_meal.xml" value="0.2234375" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_category.xml" value="0.1" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_container.xml" value="0.2234375" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_edit_meal.xml" value="0.2" />
@@ -40,7 +45,7 @@
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_home.xml" value="0.2234375" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_ingredient_list.xml" value="0.2234375" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_login_tab.xml" value="0.2234375" />
-        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_personal_list.xml" value="0.264" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_personal_list.xml" value="0.16" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_set_new_password.xml" value="0.20625" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/fragment_signup_tab.xml" value="0.2" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/home/fragment_ingredient_list.xml" value="0.2234375" />
@@ -51,6 +56,8 @@
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/item_recycler_meal_personal_shimmer.xml" value="0.264" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/item_recycler_personal_meal.xml" value="0.2234375" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/layout/item_recycler_search.xml" value="0.2" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/menu/menu_add_meal.xml" value="0.2234375" />
+        <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/menu/menu_bottom_nav.xml" value="0.2234375" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/menu/menu_detail.xml" value="0.2234375" />
         <entry key="..\:/Tai_Lieu/NM_di_dong/FoodRecipe-chinh1/app/src/main/res/menu/menu_detail_edit.xml" value="0.2234375" />
       </map>
