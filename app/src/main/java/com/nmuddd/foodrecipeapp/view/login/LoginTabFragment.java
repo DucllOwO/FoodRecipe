@@ -50,6 +50,7 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
     FragmentManager fragmentManager;
     ProgressBar progressBar;
 
+    private int count_back_click;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
         forgot_password = root.findViewById(R.id.forgot_password);
         login_button = root.findViewById(R.id.button_login);
         fragmentManager = getParentFragmentManager();
+        count_back_click = 0;
 
         forgot_password.setOnClickListener(this);
 
@@ -72,6 +74,21 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
         });
 
         return root;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (LoginActivity.count_back_click == 0) {
+            LoginActivity.count_back_click++;
+            LoginTabFragment loginTabFragment = new LoginTabFragment();
+            FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+            fragmentTransaction.setReorderingAllowed(true).replace(R.id.fragment_container_login_forgot, loginTabFragment);
+            fragmentTransaction.addToBackStack("login");
+            fragmentTransaction.commit();
+        } else {
+            getActivity().finish();
+        }
     }
 
     private void setupLogin() {

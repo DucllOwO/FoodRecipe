@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectionReceiv
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private Firebase firebase;
+    public static int count_back_click = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

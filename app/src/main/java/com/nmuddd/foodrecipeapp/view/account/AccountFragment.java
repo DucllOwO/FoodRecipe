@@ -110,7 +110,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener, C
                 if (snapshot.exists()) {
                     for (DataSnapshot user : snapshot.getChildren()) {
 
-                        if (!user.getValue(User.class).getAvatar().isEmpty()) {
+                        if (user.getValue(User.class).getAvatar() != null && !user.getValue(User.class).getAvatar().isEmpty()) {
                             Picasso.get().load(user.getValue(User.class).getAvatar()).placeholder(R.drawable.shadow_bottom_to_top).into(avatar);
                         }
                         progressBar.setVisibility(View.GONE);
