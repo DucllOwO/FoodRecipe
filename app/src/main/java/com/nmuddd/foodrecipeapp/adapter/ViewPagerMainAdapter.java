@@ -29,7 +29,7 @@ public class ViewPagerMainAdapter extends FragmentStateAdapter {
             case 3:
                 return new AccountFragment();
             default:
-                return new HomeFragment();
+                return null;
         }
     }
 
