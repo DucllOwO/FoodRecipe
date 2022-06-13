@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,18 +64,23 @@ public class PersonalListFragment extends Fragment implements PersonalListView {
 
     @Override
     public void setMyMeal() {
-        RecyclerViewPersonalMealAdapter recyclerViewPersonalMealAdapter =
-                new RecyclerViewPersonalMealAdapter(getActivity(), CurrentUser.myMeal);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.setClipToPadding(false);
-        recyclerView.setAdapter(recyclerViewPersonalMealAdapter);
-        recyclerViewPersonalMealAdapter.notifyDataSetChanged();
+        try {
+            RecyclerViewPersonalMealAdapter recyclerViewPersonalMealAdapter =
+                    new RecyclerViewPersonalMealAdapter(getActivity(), CurrentUser.myMeal);
+            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            recyclerView.setClipToPadding(false);
+            recyclerView.setAdapter(recyclerViewPersonalMealAdapter);
+            recyclerViewPersonalMealAdapter.notifyDataSetChanged();
 
-        recyclerViewPersonalMealAdapter.setOnItemClickListener((view, position) -> {
-            Intent intent = new Intent(view.getContext(), DetailPersonalActivity.class);
-            intent.putExtra(EXTRA_DETAIL_PERSONAL, (Serializable) CurrentUser.myMeal.get(position));
-            startActivity(intent);
-        });
+            recyclerViewPersonalMealAdapter.setOnItemClickListener((view, position) -> {
+                Intent intent = new Intent(view.getContext(), DetailPersonalActivity.class);
+                intent.putExtra(EXTRA_DETAIL_PERSONAL, (Serializable) CurrentUser.myMeal.get(position));
+                startActivity(intent);
+            });
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Set meal error", Toast.LENGTH_SHORT);
+        }
+
 
     }
 }

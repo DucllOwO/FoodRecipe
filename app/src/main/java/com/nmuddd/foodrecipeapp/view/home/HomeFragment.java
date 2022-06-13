@@ -1,10 +1,16 @@
 package com.nmuddd.foodrecipeapp.view.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,20 +25,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.nmuddd.foodrecipeapp.R;
+import com.nmuddd.foodrecipeapp.Utils.ConnectionReceiver;
 import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.adapter.RecyclerViewHomeAdapter;
 import com.nmuddd.foodrecipeapp.adapter.RecyclerViewSearchItemAdapter;
 import com.nmuddd.foodrecipeapp.adapter.ViewPagerHeaderAdapter;
 import com.nmuddd.foodrecipeapp.model.Category;
 import com.nmuddd.foodrecipeapp.model.Meal;
+import com.nmuddd.foodrecipeapp.view.LostInternetConnectionActivity;
 import com.nmuddd.foodrecipeapp.view.category.CategoryActivity;
 import com.nmuddd.foodrecipeapp.view.detail.DetailActivity;
+import com.nmuddd.foodrecipeapp.view.login.LoginActivity;
 
 import java.io.Serializable;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements HomeView {
+public class HomeFragment extends Fragment implements HomeView, ConnectionReceiver.ReceiverListener {
     private View view;
 
     public static final String EXTRA_CATEGORY = "category";
@@ -60,6 +69,7 @@ public class HomeFragment extends Fragment implements HomeView {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                checkConnection();
                 if (!s.isEmpty()) {
                     recyclerSearchItem.setVisibility(View.VISIBLE);
                     presenter.getMealsByName(s);
@@ -82,17 +92,17 @@ public class HomeFragment extends Fragment implements HomeView {
         presenter.getRandomMeals();
         presenter.getCategories();
 
-
+        setupUI(view);
         return view;
     }
 
-    /*public void setupUI(View view) {
+    public void setupUI(View view) {
 
         // Set up touch listener for non-text box views to hide keyboard.
         if (!(view instanceof EditText)) {
             view.setOnTouchListener(new View.OnTouchListener() {
                 public boolean onTouch(View v, MotionEvent event) {
-                    Utils.hideSoftKeyboard(HomeFragment.this);
+                    Utils.hideSoftKeyboard(getActivity());
                     return false;
                 }
             });
@@ -105,7 +115,7 @@ public class HomeFragment extends Fragment implements HomeView {
                 setupUI(innerView);
             }
         }
-    }*/
+    }
 
 
     @Override
@@ -116,10 +126,12 @@ public class HomeFragment extends Fragment implements HomeView {
         headerAdapter.notifyDataSetChanged();
 
         headerAdapter.setOnItemClickListener((view, position) -> {
-            TextView mealName = view.findViewById(R.id.mealName);
-            Intent intent = new Intent(getContext(), DetailActivity.class);
-            intent.putExtra(EXTRA_DETAIL, mealName.getText().toString());
-            startActivity(intent);
+            if (checkConnection()) {
+                TextView mealName = view.findViewById(R.id.mealName);
+                Intent intent = new Intent(getContext(), DetailActivity.class);
+                intent.putExtra(EXTRA_DETAIL, mealName.getText().toString());
+                startActivity(intent);
+            }
         });
     }
 
@@ -134,10 +146,12 @@ public class HomeFragment extends Fragment implements HomeView {
         recyclerViewSearchItemAdapter.setOnItemClickListener(new RecyclerViewSearchItemAdapter.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                int positionMeal = recyclerSearchItem.getChildAdapterPosition(view);
-                Intent intent = new Intent(getContext(), DetailActivity.class);
-                intent.putExtra(EXTRA_DETAIL, recyclerViewSearchItemAdapter.getMeal(positionMeal).getStrMeal());
-                startActivity(intent);
+                if (checkConnection()) {
+                    int positionMeal = recyclerSearchItem.getChildAdapterPosition(view);
+                    Intent intent = new Intent(getContext(), DetailActivity.class);
+                    intent.putExtra(EXTRA_DETAIL, recyclerViewSearchItemAdapter.getMeal(positionMeal).getStrMeal());
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -153,6 +167,7 @@ public class HomeFragment extends Fragment implements HomeView {
         homeAdapter.notifyDataSetChanged();
 
         homeAdapter.setOnItemClickListener((view, position) -> {
+            checkConnection();
             Intent intent = new Intent(getContext(), CategoryActivity.class);
             intent.putExtra(EXTRA_CATEGORY, (Serializable) category);
             intent.putExtra(EXTRA_POSITION, position);
@@ -182,4 +197,41 @@ public class HomeFragment extends Fragment implements HomeView {
         view.findViewById(R.id.shimmerCategory).setVisibility(View.GONE);
     }
 
+    private Boolean checkConnection() {
+
+        // initialize intent filter
+        IntentFilter intentFilter = new IntentFilter();
+
+        // add action
+        intentFilter.addAction("android.new.conn.CONNECTIVITY_CHANGE");
+
+        // register receiver
+        getContext().registerReceiver(new ConnectionReceiver(), intentFilter);
+
+        // Initialize listener
+        ConnectionReceiver.Listener = this;
+
+        // Initialize connectivity manager
+        ConnectivityManager manager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Initialize network info
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        // get connection status
+        boolean isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
+
+        if (!isConnected)
+            startActivityLostInternetConnection(isConnected);
+
+        return isConnected;
+    }
+
+    private void startActivityLostInternetConnection(boolean isConnected) {
+        Intent intent = new Intent(getContext(), LostInternetConnectionActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNetworkChange(boolean isConnected) {
+    }
 }

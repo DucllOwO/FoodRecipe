@@ -2,14 +2,19 @@ package com.nmuddd.foodrecipeapp.view.add_meal;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -37,11 +42,14 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.nmuddd.foodrecipeapp.R;
+import com.nmuddd.foodrecipeapp.Utils.ConnectionReceiver;
 import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
+import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.database.FirebaseStorageInstance;
 import com.nmuddd.foodrecipeapp.model.Meal;
 import com.nmuddd.foodrecipeapp.model.User;
+import com.nmuddd.foodrecipeapp.view.LostInternetConnectionActivity;
 import com.nmuddd.foodrecipeapp.view.account.AccountFragment;
 
 import java.io.IOException;
@@ -49,7 +57,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddMealActivity extends AppCompatActivity implements View.OnClickListener {
+public class AddMealActivity extends AppCompatActivity implements View.OnClickListener, ConnectionReceiver.ReceiverListener {
     ArrayList<EditText> listIngredientItemET = new ArrayList<>(20);
     ArrayList<EditText> listMeasureItemET = new ArrayList<>(20);
     EditText category;
@@ -75,6 +83,8 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_meal);
+        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
+                .findViewById(android.R.id.content)).getChildAt(0);
 
         firebaseStorageInstance = new FirebaseStorageInstance();
         firebase = new Firebase();
@@ -99,6 +109,29 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
         uploadImage.setOnClickListener(this);
         createRecipe.setOnClickListener(this);
         subtractItem.setOnClickListener(this);
+
+        setupUI(viewGroup);
+    }
+
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    Utils.hideSoftKeyboard(AddMealActivity.this);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
     }
 
     private void setupActionBar() {
@@ -170,22 +203,29 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.add_item_button:
-                if (listIngredientItemET.size() <= 20) {
-                    addEditTextIngredientToLayout();
-                    addEditTextMeasureToLayout();
-                } else {
-                    displayAlertDialog("Ingredients and measures don't allow to exceed 20");
+                if (checkConnection()) {
+                    if (listIngredientItemET.size() <= 20) {
+                        addEditTextIngredientToLayout();
+                        addEditTextMeasureToLayout();
+                    } else {
+                        displayAlertDialog("Ingredients and measures don't allow to exceed 20");
+                    }
                 }
                 break;
             case R.id.delete_item_button:
-                deleteEmptyItem();
+                if (checkConnection())
+                    deleteEmptyItem();
                 break;
             case R.id.create_recipe_btn:
-                if (checkDataValid())
-                    addMyMealAndImageToFirebase();
+                if (checkConnection()) {
+                    if (checkDataValid())
+                        addMyMealAndImageToFirebase();
+                }
+
                 break;
             case R.id.upload_image_create_recipe:
-                showFileChooser();
+                if (checkConnection())
+                    showFileChooser();
                 break;
             default:
                 break;
@@ -431,5 +471,44 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
             user.setMyMeal(meals);
         }
         return user;
+    }
+
+    private Boolean checkConnection() {
+
+        // initialize intent filter
+        IntentFilter intentFilter = new IntentFilter();
+
+        // add action
+        intentFilter.addAction("android.new.conn.CONNECTIVITY_CHANGE");
+
+        // register receiver
+        getApplicationContext().registerReceiver(new ConnectionReceiver(), intentFilter);
+
+        // Initialize listener
+        ConnectionReceiver.Listener = this;
+
+        // Initialize connectivity manager
+        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Initialize network info
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        // get connection status
+        boolean isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
+
+        if (!isConnected)
+            startActivityLostInternetConnection(isConnected);
+
+        return isConnected;
+    }
+
+    private void startActivityLostInternetConnection(boolean isConnected) {
+        Intent intent = new Intent(AddMealActivity.this, LostInternetConnectionActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNetworkChange(boolean isConnected) {
+
     }
 }

@@ -2,7 +2,11 @@ package com.nmuddd.foodrecipeapp.view.category;
 
 import static com.nmuddd.foodrecipeapp.view.home.HomeFragment.EXTRA_DETAIL;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +24,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nmuddd.foodrecipeapp.R;
+import com.nmuddd.foodrecipeapp.Utils.ConnectionReceiver;
 import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.adapter.RecyclerViewMealByCategoryAdapter;
 import com.nmuddd.foodrecipeapp.model.Meal;
+import com.nmuddd.foodrecipeapp.view.LostInternetConnectionActivity;
 import com.nmuddd.foodrecipeapp.view.detail.DetailActivity;
 import com.squareup.picasso.Picasso;
 
@@ -32,7 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CategoryFragment extends Fragment implements CategoryView {
+public class CategoryFragment extends Fragment implements CategoryView, ConnectionReceiver.ReceiverListener {
 
     public static final String API_KEY = "1a6fb5e756684298b67fbd7e9d8ffd77";
 
@@ -74,7 +80,8 @@ public class CategoryFragment extends Fragment implements CategoryView {
                     .setMessage(getArguments().getString("EXTRA_DATA_DESC"));
 
             CategoryPresenter presenter = new CategoryPresenter(this);
-            presenter.getMealByCategory(getArguments().getString("EXTRA_DATA_NAME"));
+            if (checkConnection())
+                presenter.getMealByCategory(getArguments().getString("EXTRA_DATA_NAME"));
         }
     }
 
@@ -98,11 +105,13 @@ public class CategoryFragment extends Fragment implements CategoryView {
         adapter.notifyDataSetChanged();
 
         adapter.setOnItemClickListener((view, position) -> {
-            TextView mealName = view.findViewById(R.id.mealName);
-            Intent intent = new Intent(getActivity(), DetailActivity.class);
-            intent.putExtra(EXTRA_DETAIL, mealName.getText().toString());
-            startActivity(intent);
-            getActivity().getFragmentManager().popBackStack();
+            if (checkConnection()) {
+                TextView mealName = view.findViewById(R.id.mealName);
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra(EXTRA_DETAIL, mealName.getText().toString());
+                startActivity(intent);
+                getActivity().getFragmentManager().popBackStack();
+            }
         });
     }
 
@@ -120,5 +129,42 @@ public class CategoryFragment extends Fragment implements CategoryView {
     @Override
     public void displayToast(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private Boolean checkConnection() {
+
+        // initialize intent filter
+        IntentFilter intentFilter = new IntentFilter();
+
+        // add action
+        intentFilter.addAction("android.new.conn.CONNECTIVITY_CHANGE");
+
+        // register receiver
+        getContext().registerReceiver(new ConnectionReceiver(), intentFilter);
+
+        // Initialize listener
+        ConnectionReceiver.Listener = this;
+
+        // Initialize connectivity manager
+        ConnectivityManager manager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Initialize network info
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        // get connection status
+        boolean isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
+
+        if (!isConnected)
+            startActivityLostInternetConnection(isConnected);
+        return isConnected;}
+
+    private void startActivityLostInternetConnection(boolean isConnected) {
+        Intent intent = new Intent(getContext(), LostInternetConnectionActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNetworkChange(boolean isConnected) {
+
     }
 }

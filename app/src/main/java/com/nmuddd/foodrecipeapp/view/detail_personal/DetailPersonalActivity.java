@@ -1,7 +1,11 @@
 package com.nmuddd.foodrecipeapp.view.detail_personal;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,7 +32,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
-import com.nmuddd.foodrecipeapp.EditMealActivity;
+import com.nmuddd.foodrecipeapp.Utils.ConnectionReceiver;
+import com.nmuddd.foodrecipeapp.view.LostInternetConnectionActivity;
+import com.nmuddd.foodrecipeapp.view.edit_meal.EditMealActivity;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
 import com.nmuddd.foodrecipeapp.Utils.Utils;
@@ -44,7 +50,7 @@ import java.io.Serializable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailPersonalActivity extends AppCompatActivity implements DetailPersonalView {
+public class DetailPersonalActivity extends AppCompatActivity implements DetailPersonalView, ConnectionReceiver.ReceiverListener {
     public static final String EXTRA_DETAIL_PERSONAL = "detail_personal";
     public static final String EXTRA_EDIT_MEAL = "edit_meal";
     @BindView(R.id.toolbar)
@@ -128,13 +134,16 @@ public class DetailPersonalActivity extends AppCompatActivity implements DetailP
                 onBackPressed();
                 return true;
             case R.id.edit:
-                Intent intentToEditMeal = new Intent(this, EditMealActivity.class);
-                intentToEditMeal.putExtra(EXTRA_EDIT_MEAL, (Serializable) meal);
-                startActivity(intentToEditMeal);
-                finish();
+                if (checkConnection()) {
+                    Intent intentToEditMeal = new Intent(this, EditMealActivity.class);
+                    intentToEditMeal.putExtra(EXTRA_EDIT_MEAL, (Serializable) meal);
+                    startActivity(intentToEditMeal);
+                    finish();
+                }
                 return true;
             case R.id.delete:
-                deleteRecipe();
+                if (checkConnection())
+                    deleteRecipe();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -315,67 +324,110 @@ public class DetailPersonalActivity extends AppCompatActivity implements DetailP
 
     @Override
     public void displayAlertYESNO(String alertMessage) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        if (checkConnection()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Alert");
-        builder.setMessage(alertMessage);
+            builder.setTitle("Alert");
+            builder.setMessage(alertMessage);
 
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                StorageReference storageReference = firebaseStorageInstance.firebaseStorage
-                        .child(FirebaseStorageInstance.STORAGE_PATH_UPLOADS + CurrentUser.idUser + meal.getIdMeal() + "." + getFileExtension(meal.getStrMealThumb()));
-                storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Query query = firebase.dbReference.child(firebase.tableNameUser).orderByChild("idUser")
-                                .equalTo(CurrentUser.idUser);
-                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    if (checkConnection()) {
+                        StorageReference storageReference = firebaseStorageInstance.firebaseStorage
+                                .child(FirebaseStorageInstance.STORAGE_PATH_UPLOADS + CurrentUser.idUser + meal.getIdMeal() + "." + getFileExtension(meal.getStrMealThumb()));
+                        storageReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                    for (DataSnapshot user : snapshot.getChildren()) {
-                                        for (int i = 0; i < CurrentUser.myMeal.size(); i++) {
-                                            if (meal.getIdMeal().equals(CurrentUser.myMeal.get(i).getIdMeal()))
-                                                CurrentUser.myMeal.remove(i);
+                            public void onSuccess(Void unused) {
+                                Query query = firebase.dbReference.child(firebase.tableNameUser).orderByChild("idUser")
+                                        .equalTo(CurrentUser.idUser);
+                                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.exists()) {
+                                            for (DataSnapshot user : snapshot.getChildren()) {
+                                                for (int i = 0; i < CurrentUser.myMeal.size(); i++) {
+                                                    if (meal.getIdMeal().equals(CurrentUser.myMeal.get(i).getIdMeal()))
+                                                        CurrentUser.myMeal.remove(i);
+                                                }
+                                                User user1 = new User();
+                                                user1.setMyMeal(CurrentUser.myMeal);
+                                                user1.setIdUser(CurrentUser.idUser);
+                                                user1.setMealFavorite(CurrentUser.mealFavorite);
+                                                user1.setPassword(CurrentUser.password);
+                                                user1.setEmail(CurrentUser.email);
+                                                user.getRef().setValue(user1);
+                                            }
+                                            onBackPressed();
+                                            finish();
                                         }
-                                        User user1 = new User();
-                                        user1.setMyMeal(CurrentUser.myMeal);
-                                        user1.setIdUser(CurrentUser.idUser);
-                                        user1.setMealFavorite(CurrentUser.mealFavorite);
-                                        user1.setPassword(CurrentUser.password);
-                                        user1.setEmail(CurrentUser.email);
-                                        user.getRef().setValue(user1);
                                     }
-                                    onBackPressed();
-                                    finish();
-                                }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
                             }
-
+                        }).addOnFailureListener(new OnFailureListener() {
                             @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
+                            public void onFailure(@NonNull Exception e) {
                             }
                         });
 
+                        dialog.dismiss();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
                     }
-                });
+            });
 
-                dialog.dismiss();
-            }
-        });
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
 
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
 
-        AlertDialog alert = builder.create();
-        alert.show();
+    }
+
+    private Boolean checkConnection() {
+
+        // initialize intent filter
+        IntentFilter intentFilter = new IntentFilter();
+
+        // add action
+        intentFilter.addAction("android.new.conn.CONNECTIVITY_CHANGE");
+
+        // register receiver
+        getApplicationContext().registerReceiver(new ConnectionReceiver(), intentFilter);
+
+        // Initialize listener
+        ConnectionReceiver.Listener = (ConnectionReceiver.ReceiverListener) this;
+
+        // Initialize connectivity manager
+        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Initialize network info
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        // get connection status
+        boolean isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
+
+        if (!isConnected)
+            startActivityLostInternetConnection(isConnected);
+
+        return isConnected;
+    }
+
+    private void startActivityLostInternetConnection(boolean isConnected) {
+        Intent intent = new Intent(DetailPersonalActivity.this, LostInternetConnectionActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNetworkChange(boolean isConnected) {
     }
 }

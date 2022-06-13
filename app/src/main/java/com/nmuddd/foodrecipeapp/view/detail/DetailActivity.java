@@ -1,8 +1,12 @@
 package com.nmuddd.foodrecipeapp.view.detail;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,11 +31,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.nmuddd.foodrecipeapp.R;
+import com.nmuddd.foodrecipeapp.Utils.ConnectionReceiver;
 import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
 import com.nmuddd.foodrecipeapp.Utils.Utils;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.Meal;
 import com.nmuddd.foodrecipeapp.model.User;
+import com.nmuddd.foodrecipeapp.view.LostInternetConnectionActivity;
 import com.nmuddd.foodrecipeapp.view.home.HomeFragment;
 import com.squareup.picasso.Picasso;
 
@@ -41,7 +47,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DetailActivity extends AppCompatActivity implements DetailView {
+public class DetailActivity extends AppCompatActivity implements DetailView, ConnectionReceiver.ReceiverListener {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -99,8 +105,8 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
         strMealName = intent.getStringExtra(HomeFragment.EXTRA_DETAIL);
 
         DetailPresenter presenter = new DetailPresenter(this, getApplicationContext());
-
-        presenter.getMealById(strMealName);
+        if (checkConnection())
+            presenter.getMealById(strMealName);
 
 
     }
@@ -150,7 +156,10 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
                 onBackPressed();
                 return true;
             case R.id.favorite:
-                addOrRemoveToFavorite();
+                if (checkConnection()) {
+                    addOrRemoveToFavorite();
+                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -418,5 +427,44 @@ public class DetailActivity extends AppCompatActivity implements DetailView {
     @Override
     public void displayToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private Boolean checkConnection() {
+
+        // initialize intent filter
+        IntentFilter intentFilter = new IntentFilter();
+
+        // add action
+        intentFilter.addAction("android.new.conn.CONNECTIVITY_CHANGE");
+
+        // register receiver
+        getApplicationContext().registerReceiver(new ConnectionReceiver(), intentFilter);
+
+        // Initialize listener
+        ConnectionReceiver.Listener = this;
+
+        // Initialize connectivity manager
+        ConnectivityManager manager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Initialize network info
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        // get connection status
+        boolean isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
+
+        if (!isConnected)
+            startActivityLostInternetConnection();
+
+        return isConnected;
+    }
+
+    private void startActivityLostInternetConnection() {
+        Intent intent = new Intent(getApplicationContext(), LostInternetConnectionActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNetworkChange(boolean isConnected) {
+
     }
 }

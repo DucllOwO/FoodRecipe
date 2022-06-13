@@ -4,9 +4,13 @@ import static android.app.Activity.RESULT_OK;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -38,11 +42,13 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.nmuddd.foodrecipeapp.R;
+import com.nmuddd.foodrecipeapp.Utils.ConnectionReceiver;
 import com.nmuddd.foodrecipeapp.Utils.CurrentUser;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.database.FirebaseStorageInstance;
 import com.nmuddd.foodrecipeapp.model.Meal;
 import com.nmuddd.foodrecipeapp.model.User;
+import com.nmuddd.foodrecipeapp.view.LostInternetConnectionActivity;
 import com.nmuddd.foodrecipeapp.view.login.LoginActivity;
 import com.squareup.picasso.Picasso;
 
@@ -50,7 +56,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountFragment extends Fragment implements View.OnClickListener {
+public class AccountFragment extends Fragment implements View.OnClickListener, ConnectionReceiver.ReceiverListener {
     public static final int PICK_IMAGE_REQUEST = 234;
     private View view;
     ImageView avatar;
@@ -123,13 +129,16 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.upload_iamge:
-                showFileChooser();
+                if (checkConnection())
+                    showFileChooser();
                 break;
             case R.id.change_password_btn:
-                displayAlertDialog();
+                if (checkConnection())
+                    displayAlertDialog();
                 break;
             case R.id.logout:
-                Logout();
+                if (checkConnection())
+                    Logout();
                 break;
             default:
                 break;
@@ -137,7 +146,9 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
     }
 
     private void uploadImageToStorage() {
+        checkConnection();
         deleteOldImage();
+        checkConnection();
         uploadImageToStorageAndDatabase();
     }
 
@@ -358,5 +369,42 @@ public class AccountFragment extends Fragment implements View.OnClickListener {
 
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private Boolean checkConnection() {
+
+        // initialize intent filter
+        IntentFilter intentFilter = new IntentFilter();
+
+        // add action
+        intentFilter.addAction("android.new.conn.CONNECTIVITY_CHANGE");
+
+        // register receiver
+        getContext().registerReceiver(new ConnectionReceiver(), intentFilter);
+
+        // Initialize listener
+        ConnectionReceiver.Listener = this;
+
+        // Initialize connectivity manager
+        ConnectivityManager manager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        // Initialize network info
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+
+        // get connection status
+        boolean isConnected = networkInfo != null && networkInfo.isConnectedOrConnecting();
+
+        if (!isConnected)
+            startActivityLostInternetConnection(isConnected); 
+    return isConnected;}
+
+    private void startActivityLostInternetConnection(boolean isConnected) {
+        Intent intent = new Intent(getContext(), LostInternetConnectionActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onNetworkChange(boolean isConnected) {
+
     }
 }
