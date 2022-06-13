@@ -80,8 +80,7 @@ public class CategoryFragment extends Fragment implements CategoryView, Connecti
                     .setMessage(getArguments().getString("EXTRA_DATA_DESC"));
 
             CategoryPresenter presenter = new CategoryPresenter(this);
-            if (checkConnection())
-                presenter.getMealByCategory(getArguments().getString("EXTRA_DATA_NAME"));
+            presenter.getMealByCategory(getArguments().getString("EXTRA_DATA_NAME"));
         }
     }
 

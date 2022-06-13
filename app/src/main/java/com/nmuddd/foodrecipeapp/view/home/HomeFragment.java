@@ -167,11 +167,12 @@ public class HomeFragment extends Fragment implements HomeView, ConnectionReceiv
         homeAdapter.notifyDataSetChanged();
 
         homeAdapter.setOnItemClickListener((view, position) -> {
-            checkConnection();
-            Intent intent = new Intent(getContext(), CategoryActivity.class);
-            intent.putExtra(EXTRA_CATEGORY, (Serializable) category);
-            intent.putExtra(EXTRA_POSITION, position);
-            startActivity(intent);
+            if (checkConnection()) {
+                Intent intent = new Intent(getContext(), CategoryActivity.class);
+                intent.putExtra(EXTRA_CATEGORY, (Serializable) category);
+                intent.putExtra(EXTRA_POSITION, position);
+                startActivity(intent);
+            }
         });
     }
 
