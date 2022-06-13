@@ -12,7 +12,8 @@
         app:lottie_rawRes="@raw/no_internet_access"
         app:lottie_loop="true"
         android:layout_gravity="center"
-        android:layout_marginTop="70dp"/>
+        android:layout_marginTop="70dp"
+        app:lottie_autoPlay="true"/>
 
     <TextView
         android:layout_width="wrap_content"
