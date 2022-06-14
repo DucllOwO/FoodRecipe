@@ -46,7 +46,6 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
         View view = LayoutInflater.from(context).inflate(R.layout.item_recycler_meal,
                 viewGroup, false);
         firebase = new Firebase();
-        getMealFavorite();
         return new RecyclerViewHolder(view);
     }
 
@@ -59,17 +58,7 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
         String strMealName = meals.get(i).getStrMeal();
         viewHolder.mealName.setText(strMealName);
 
-        getMealFavorite();
-        if (strMealName != null && CurrentUser.mealFavorite != null) {
-            for (Meal meal : CurrentUser.mealFavorite) {
-                if (meal.getStrMeal().equals(strMealName)) {
-                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
-                    break;
-                } else
-                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
-
-            }
-        }
+        getMealFavorite(strMealName, viewHolder);
 
         viewHolder.love.setOnClickListener(v -> {
             addOrRemoveToFavorite(meals.get(i), viewHolder);
@@ -180,13 +169,22 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
         return user;
     }
 
-    private void getMealFavorite() {
+    private void getMealFavorite(String strMealName, RecyclerViewHolder viewHolder) {
         Query query = firebase.dbReference.child(firebase.tableNameUser).orderByChild("idUser").equalTo(CurrentUser.idUser);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot user : snapshot.getChildren()) {
+                        if (CurrentUser.mealFavorite != null) {
+                            for (Meal meal : user.getValue(User.class).getMealFavorite()) {
+                                if (meal.getStrMeal().equals(strMealName)) {
+                                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
+                                    break;
+                                } else
+                                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
+                            }
+                        }
                         CurrentUser.mealFavorite = user.getValue(User.class).getMealFavorite();
                     }
                 }
@@ -197,17 +195,5 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
 
             }
         });
-    }
-
-    private boolean isFavorite(String strMealName) {
-        getMealFavorite();
-        if (strMealName != null && CurrentUser.mealFavorite != null) {
-            for (Meal meal : CurrentUser.mealFavorite) {
-                if (meal.getStrMeal().equals(strMealName))
-                    return true;
-
-            }
-        }
-        return false;
     }
 }
