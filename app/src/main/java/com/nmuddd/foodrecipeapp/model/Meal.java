@@ -16,9 +16,6 @@ public class Meal implements Serializable {
     @SerializedName("strMeal")
     @Expose
     private String strMeal;
-    @SerializedName("strDrinkAlternate")
-    @Expose
-    private Object strDrinkAlternate;
     @SerializedName("strCategory")
     @Expose
     private String strCategory;
@@ -182,14 +179,6 @@ public class Meal implements Serializable {
 
     public void setStrMeal(String strMeal) {
         this.strMeal = strMeal;
-    }
-
-    public Object getStrDrinkAlternate() {
-        return strDrinkAlternate;
-    }
-
-    public void setStrDrinkAlternate(Object strDrinkAlternate) {
-        this.strDrinkAlternate = strDrinkAlternate;
     }
 
     public String getStrCategory() {
