@@ -87,6 +87,12 @@ public class LoginActivity extends AppCompatActivity implements ConnectionReceiv
         setupUIHideSoftKeyboard(viewGroup);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     private Boolean checkConnection() {
 
         // initialize intent filter

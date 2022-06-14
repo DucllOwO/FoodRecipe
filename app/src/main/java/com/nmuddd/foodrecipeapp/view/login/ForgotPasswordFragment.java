@@ -71,13 +71,15 @@ public class ForgotPasswordFragment extends Fragment implements View.OnClickList
                                @Override
                                public void onComplete(@NonNull Task<Void> task) {
                                    if (task.isSuccessful()) {
-                                       Toast.makeText(getContext(), "Please check your email", Toast.LENGTH_LONG);
+                                       Toast.makeText(getContext(), "Please check your email", Toast.LENGTH_LONG).show();
                                    } else {
-                                       Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG);
+                                       Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                    }
                                }
                            });
+
                }
+               break;
             default:
                 break;
         }

@@ -137,8 +137,11 @@ public class AccountFragment extends Fragment implements View.OnClickListener, C
                     displayAlertDialog();
                 break;
             case R.id.logout:
-                if (checkConnection())
+                if (checkConnection()) {
                     Logout();
+
+                }
+
                 break;
             default:
                 break;
@@ -299,6 +302,7 @@ public class AccountFragment extends Fragment implements View.OnClickListener, C
             public void onClick(DialogInterface dialog, int which) {
                 FirebaseAuth.getInstance().signOut();
                 Intent intentToLogin = new Intent(getActivity(), LoginActivity.class);
+                getActivity().finish();
                 startActivity(intentToLogin);
                 dialog.dismiss();
             }

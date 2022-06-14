@@ -108,6 +108,7 @@ public class LoginTabFragment extends Fragment implements View.OnClickListener, 
                                                                     getCurrentUserData(dataSnapshot);
                                                                     Toast.makeText(getContext(), "Login Successfully", Toast.LENGTH_SHORT).show();
                                                                     progressBar.setVisibility(View.GONE);
+                                                                    getActivity().finish();
                                                                     startActivity(new Intent(getContext(), MainActivity.class));
                                                                 }
                                                             }
