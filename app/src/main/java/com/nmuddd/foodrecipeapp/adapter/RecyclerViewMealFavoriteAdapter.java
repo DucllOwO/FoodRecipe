@@ -58,28 +58,30 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
         viewHolder.mealName.setText(strMealName);
 
 
-        getMealFavorite();
-        if (strMealName != null && CurrentUser.mealFavorite != null) {
-            for (Meal meal : CurrentUser.mealFavorite) {
-                if (meal.getStrMeal().equals(strMealName)) {
-                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
-                    break;
-                } else
-                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
-            }
-        }
+        getMealFavorite(strMealName, viewHolder);
+
+
         viewHolder.love.setOnClickListener(v -> {
             addOrRemoveToFavorite(meals.get(i), viewHolder);
         });
     }
 
-    private void getMealFavorite() {
+    private void getMealFavorite(String strMealName, RecyclerViewHolder viewHolder) {
         Query query = firebase.dbReference.child(firebase.tableNameUser).orderByChild("idUser").equalTo(CurrentUser.idUser);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot user : snapshot.getChildren()) {
+                        if (CurrentUser.mealFavorite != null) {
+                            for (Meal meal : user.getValue(User.class).getMealFavorite()) {
+                                if (meal.getStrMeal().equals(strMealName)) {
+                                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
+                                    break;
+                                } else
+                                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
+                            }
+                        }
                         CurrentUser.mealFavorite = user.getValue(User.class).getMealFavorite();
                     }
                 }
