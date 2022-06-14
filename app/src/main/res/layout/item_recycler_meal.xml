@@ -16,31 +16,38 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <ImageView
             android:id="@+id/mealThumb"
             android:scaleType="centerCrop"
             android:src="@drawable/sample_image_meal"
             android:layout_width="match_parent"
-            android:layout_height="150dp"/>
+            android:layout_height="150dp" />
+
         <View
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/shadow_for_love_white"
             android:layout_width="130dp"
-            android:layout_height="90dp"/>
+            android:layout_height="90dp" />
+
         <ImageView
             android:id="@+id/love"
-            android:src="@drawable/ic_favorite_border"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:focusable="true"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            tools:ignore="NewApi"
-            app:tint="@color/colorAccent" />
+            android:src="@drawable/ic_favorite_border"
+            app:tint="@color/colorPrimaryDark"
+            tools:ignore="NewApi" />
+
         <TextView
             android:text="@string/meal_categories"
             android:textSize="16sp"

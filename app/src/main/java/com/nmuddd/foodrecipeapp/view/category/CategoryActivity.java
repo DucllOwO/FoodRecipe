@@ -11,7 +11,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.adapter.ViewPagerCategoryAdapter;
-import com.nmuddd.foodrecipeapp.view.home.HomeActivity;
+import com.nmuddd.foodrecipeapp.model.Category;
+import com.nmuddd.foodrecipeapp.view.home.HomeFragment;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class CategoryActivity extends AppCompatActivity {
     TabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,23 +36,23 @@ public class CategoryActivity extends AppCompatActivity {
 
         initActionBar();
         initIntent();
-        
+
     }
 
     private void initIntent() {
-        /*Intent intent = getIntent();*//*
+        Intent intent = getIntent();
         List<Category> categories =
-                (List<Category>) intent.getSerializableExtra(HomeActivity.EXTRA_CATEGORY);*//*
-        int position = intent.getIntExtra(HomeActivity.EXTRA_POSITION, 0);
-        
+                (List<Category>) intent.getSerializableExtra(HomeFragment.EXTRA_CATEGORY);
+        int position = intent.getIntExtra(HomeFragment.EXTRA_POSITION, 0);
+
         ViewPagerCategoryAdapter adapter = new ViewPagerCategoryAdapter(
                 getSupportFragmentManager(),
                 categories);
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(position, true);
-        adapter.notifyDataSetChanged();*/
-        
+        adapter.notifyDataSetChanged();
+
     }
 
     private void initActionBar() {
@@ -70,4 +71,6 @@ public class CategoryActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
 }

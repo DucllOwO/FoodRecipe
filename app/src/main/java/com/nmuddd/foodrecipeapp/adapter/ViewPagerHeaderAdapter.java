@@ -12,7 +12,6 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.model.Meal;
-import com.nmuddd.foodrecipeapp.view.home.HomeActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -68,7 +67,7 @@ public class ViewPagerHeaderAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View)object);
+        container.removeView((View) object);
     }
 
     public interface ClickListener {

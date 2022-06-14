@@ -10,17 +10,12 @@ import java.io.Serializable;
 public class Meal implements Serializable {
 
     @SerializedName("idMeal")
+    @NonNull
     @Expose
     private String idMeal;
-    @SerializedName("isFavorite")
-    @Expose
-    private String isFavorite;
     @SerializedName("strMeal")
     @Expose
     private String strMeal;
-    @SerializedName("strDrinkAlternate")
-    @Expose
-    private Object strDrinkAlternate;
     @SerializedName("strCategory")
     @Expose
     private String strCategory;
@@ -167,6 +162,9 @@ public class Meal implements Serializable {
     @Expose
     private Object dateModified;
 
+    public Meal() {
+    }
+
     public String getIdMeal() {
         return idMeal;
     }
@@ -181,14 +179,6 @@ public class Meal implements Serializable {
 
     public void setStrMeal(String strMeal) {
         this.strMeal = strMeal;
-    }
-
-    public Object getStrDrinkAlternate() {
-        return strDrinkAlternate;
-    }
-
-    public void setStrDrinkAlternate(Object strDrinkAlternate) {
-        this.strDrinkAlternate = strDrinkAlternate;
     }
 
     public String getStrCategory() {
@@ -573,13 +563,5 @@ public class Meal implements Serializable {
 
     public void setDateModified(Object dateModified) {
         this.dateModified = dateModified;
-    }
-
-    public String getIsFavorite() {
-        return isFavorite;
-    }
-
-    public void setIsFavorite(String isFavorite) {
-        this.isFavorite = isFavorite;
     }
 }

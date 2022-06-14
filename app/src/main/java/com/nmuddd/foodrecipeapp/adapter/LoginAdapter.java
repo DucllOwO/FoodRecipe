@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.nmuddd.foodrecipeapp.view.login.LoginTabFragment;
+import com.nmuddd.foodrecipeapp.view.login.ContainerFragment;
 import com.nmuddd.foodrecipeapp.view.login.SignupTabFragment;
 
 public class LoginAdapter extends FragmentPagerAdapter {
@@ -31,8 +31,8 @@ public class LoginAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                LoginTabFragment loginTabFragment = new LoginTabFragment();
-                return loginTabFragment;
+                ContainerFragment containerFragment = new ContainerFragment();
+                return containerFragment;
             case 1:
                 SignupTabFragment signupTabFragment = new SignupTabFragment();
                 return signupTabFragment;

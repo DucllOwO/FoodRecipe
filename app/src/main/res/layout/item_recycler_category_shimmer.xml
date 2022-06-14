@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    android:layout_height="wrap_content"
+<LinearLayout android:layout_height="wrap_content"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -16,8 +15,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="3">
-        <androidx.cardview.widget.CardView 
-            xmlns:android="http://schemas.android.com/apk/res/android"
+
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -53,8 +52,7 @@
             </com.facebook.shimmer.ShimmerFrameLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView 
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -90,8 +88,7 @@
             </com.facebook.shimmer.ShimmerFrameLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView 
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

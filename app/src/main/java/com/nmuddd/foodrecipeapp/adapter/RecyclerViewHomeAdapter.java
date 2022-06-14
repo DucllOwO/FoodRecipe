@@ -59,6 +59,7 @@ public class RecyclerViewHomeAdapter extends RecyclerView.Adapter<RecyclerViewHo
         ImageView categoryThumb;
         @BindView(R.id.categoryName)
         TextView categoryName;
+
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

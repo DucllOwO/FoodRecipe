@@ -1,20 +1,11 @@
 package com.nmuddd.foodrecipeapp.view.home;
 
-import android.util.Log;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.room.Dao;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.nmuddd.foodrecipeapp.Utils.Utils;
-import com.nmuddd.foodrecipeapp.adapter.RecyclerViewSearchItemAdapter;
 import com.nmuddd.foodrecipeapp.database.Firebase;
 import com.nmuddd.foodrecipeapp.model.Category;
 import com.nmuddd.foodrecipeapp.model.Meal;
@@ -22,10 +13,7 @@ import com.nmuddd.foodrecipeapp.model.Meal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.regex.Pattern;
 
 class HomePresenter {
 
@@ -36,6 +24,7 @@ class HomePresenter {
         firebase = new Firebase();
         this.view = view;
     }
+
     // get random meal
     void getRandomMeals() {
 
@@ -70,18 +59,17 @@ class HomePresenter {
     }
 
     void getMealsByName(String mealName) {
-
-        Query query = firebase.dbReference.child(firebase.tableNameMeal).orderByChild("strMeal").equalTo(mealName);
+        Query query = firebase.dbReference.child(firebase.tableNameMeal);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    view.hideLoading();
-                    List<Meal> meals = new ArrayList<>();
+                    List<Meal> mealTemp = new ArrayList<>();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        meals.add(dataSnapshot.getValue(Meal.class));
+                        if (Pattern.compile(Pattern.quote(mealName), Pattern.CASE_INSENSITIVE).matcher(dataSnapshot.getValue(Meal.class).getStrMeal()).find())
+                            mealTemp.add(dataSnapshot.getValue(Meal.class));
                     }
-                    view.setMealSearchItem(meals);
+                    view.setMealSearchItem(mealTemp);
                 }
             }
 
@@ -101,7 +89,6 @@ class HomePresenter {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //view.setCategory(ca);
                 if (snapshot.exists()) {
                     view.hideLoading();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -118,8 +105,6 @@ class HomePresenter {
         });
 
     }
-
-
 
 }
 

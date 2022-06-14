@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
             android:id="@+id/imageView_login"
             android:layout_width="wrap_content"
@@ -25,7 +25,6 @@
             app:layout_constraintVertical_bias="0" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/viewpager_background"
@@ -48,7 +47,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0"
-                app:tabRippleColor="@color/colorNull"/>
+                app:tabRippleColor="@color/colorNull" />
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/login_viewPager"
@@ -56,59 +55,15 @@
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent=".7"
+                app:layout_constraintHeight_percent="0.9"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tab_layout_login"
                 app:layout_constraintVertical_bias="0"
-                android:visibility="visible"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/fab_google"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/login_viewPager"
-                android:orientation="horizontal"
-                android:layout_marginBottom="40dp">
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimaryText"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="5dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimaryText"
-                    android:text="OR"
-                    android:textSize="18dp"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:layout_width="50dp"
-                    android:layout_height="1dp"
-                    android:background="@color/colorPrimaryText"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="5dp"/>
-            </LinearLayout>
-
-
-
-
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_google"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorWhite"
-                android:src="@drawable/icon_google"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_viewPager"/>
+                android:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -117,6 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <ImageView
             android:id="@+id/splash_background"
             android:layout_width="match_parent"
@@ -129,7 +85,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:scaleX="1"
             android:scaleY="1.1"
-            android:paddingLeft="25dp"/>
+            android:paddingLeft="25dp" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie"
@@ -140,10 +96,7 @@
             android:layout_marginTop="250dp"
             app:lottie_imageAssetsFolder="raw"
             app:lottie_rawRes="@raw/food_choice"
-            app:lottie_loop="true"
-            />
+            app:lottie_loop="true" />
     </FrameLayout>
-
-
 
 </FrameLayout>

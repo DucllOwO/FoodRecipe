@@ -21,9 +21,10 @@ import butterknife.ButterKnife;
 
 public class RecyclerViewSearchItemAdapter extends RecyclerView.Adapter<RecyclerViewSearchItemAdapter.RecyclerViewHolder> {
     private static ClickListener clickListener;
-    private  List<Meal> meals;
+    private List<Meal> meals;
     private Context context;
-    public RecyclerViewSearchItemAdapter(Context context,  List<Meal> meals) {
+
+    public RecyclerViewSearchItemAdapter(Context context, List<Meal> meals) {
         this.meals = meals;
         this.context = context;
     }
@@ -55,12 +56,12 @@ public class RecyclerViewSearchItemAdapter extends RecyclerView.Adapter<Recycler
     }
 
 
-
     static class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.mealImageSearchItem)
         ImageView mealThumb;
         @BindView(R.id.mealNameSearchItem)
         TextView mealName;
+
         RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

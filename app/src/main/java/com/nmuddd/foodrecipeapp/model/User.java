@@ -1,12 +1,19 @@
 package com.nmuddd.foodrecipeapp.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
     @SerializedName("idUser")
+    @NonNull
     @Expose
     private String idUser;
     @SerializedName("email")
@@ -15,9 +22,23 @@ public class User implements Serializable {
     @SerializedName("password")
     @Expose
     private String password;
-    @SerializedName("idMealFavorite")
+    @SerializedName("mealFavorite")
     @Expose
-    private String[] idMealFavorite;
+    private List<Meal> mealFavorite;
+    @SerializedName("myMeal")
+    @Expose
+    private List<Meal> myMeal;
+
+
+    public User() {
+    }
+
+    public User(String idUser, String email, String password, List<Meal> mealFavorite) {
+        this.idUser = idUser;
+        this.email = email;
+        this.password = password;
+        this.mealFavorite = mealFavorite;
+    }
 
     public String getIdUser() {
         return idUser;
@@ -43,11 +64,28 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String[] getIdMealFavorite() {
-        return idMealFavorite;
+    public List<Meal> getMealFavorite() {
+        return mealFavorite;
     }
 
-    public void setIdMealFavorite(String[] idMealFavorite) {
-        this.idMealFavorite = idMealFavorite;
+    public void setMealFavorite(List<Meal> mealFavorite) {
+        this.mealFavorite = mealFavorite;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public List<Meal> getMyMeal() {
+        return myMeal;
+    }
+
+    public void setMyMeal(List<Meal> myMeal) {
+        this.myMeal = myMeal;
     }
 }
+

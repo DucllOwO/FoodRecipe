@@ -1,48 +1,49 @@
 package com.nmuddd.foodrecipeapp.view.detail;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.nmuddd.foodrecipeapp.Utils.Utils;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.nmuddd.foodrecipeapp.database.Firebase;
+import com.nmuddd.foodrecipeapp.model.Meal;
 
 public class DetailPresenter {
     private DetailView view;
     private Context context;
+    Firebase firebase;
+
     public DetailPresenter(DetailView view, Context applicationContext) {
         this.view = view;
         this.context = applicationContext;
+        firebase = new Firebase();
     }
 
     void getMealById(String mealName) {
-            view.showLoading();
+        view.showLoading();
 
-            /*Utils.getApi().getMealByName(mealName)
-                    .enqueue(new Callback<Meals>() {
-                        @Override
-                        public void onResponse(@NonNull Call<Meals> call,@NonNull Response<Meals> response) {
-                            view.hideLoading();
-                            if (response.isSuccessful() && response.body() != null) {
-                                try {
-                                    view.setMeal(response.body().getMeals().get(0));
-                                } catch (Exception e) {
-                                    Toast.makeText(context, "Món ăn" + mealName + " không tồn tại", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                view.onErrorLoading(response.message());
-                            }
-                        }
+        Query query = firebase.dbReference.child(firebase.tableNameMeal).orderByChild("strMeal")
+                .equalTo(mealName);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        view.hideLoading();
+                        view.setMeal(dataSnapshot.getValue(Meal.class));
+                    }
+                } else {
+                    view.displayToast("Get meal on database error!!!");
+                }
+            }
 
-                        @Override
-                        public void onFailure(@NonNull Call<Meals> call,@NonNull Throwable t) {
-                            view.hideLoading();
-                            view.onErrorLoading(t.getLocalizedMessage());
-                        }
-                    });*/
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                view.displayToast("Get meal on database error!!!");
+            }
+        });
     }
 }

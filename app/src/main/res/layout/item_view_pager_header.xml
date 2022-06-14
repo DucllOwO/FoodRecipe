@@ -15,15 +15,18 @@
         android:layout_marginBottom="10dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageView
                 android:id="@+id/mealThumb"
                 android:src="@drawable/sample_image_meal"
                 android:layout_width="match_parent"
                 android:scaleType="centerCrop"
                 android:layout_height="match_parent" />
+
             <ImageView
                 android:src="@drawable/shadow_bottom_to_top"
                 android:layout_width="match_parent"
@@ -61,7 +64,8 @@
                 android:textColor="@android:color/white"
                 android:textSize="20sp"
                 strokeAttrs:textStrokeColor="@android:color/black"
-                strokeAttrs:textStrokeWidth="0.3"  android:layout_width="wrap_content"/>
+                strokeAttrs:textStrokeWidth="0.3"
+                android:layout_width="wrap_content" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

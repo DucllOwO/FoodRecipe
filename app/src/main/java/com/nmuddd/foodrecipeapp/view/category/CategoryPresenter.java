@@ -2,40 +2,49 @@ package com.nmuddd.foodrecipeapp.view.category;
 
 import androidx.annotation.NonNull;
 
-import com.nmuddd.foodrecipeapp.Utils.Utils;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.nmuddd.foodrecipeapp.database.Firebase;
+import com.nmuddd.foodrecipeapp.model.Meal;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryPresenter {
     private CategoryView view;
+    Firebase firebase;
 
     public CategoryPresenter(CategoryView view) {
         this.view = view;
+        firebase = new Firebase();
     }
-    
+
     void getMealByCategory(String category) {
-        
+
         view.showLoading();
-        /*Call<Meals> mealsCall = Utils.getApi().getMealByCategory(category);
-        mealsCall.enqueue(new Callback<Meals>() {
+
+        Query query = firebase.dbReference.child(firebase.tableNameMeal).orderByChild("strCategory")
+                .equalTo(category);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onResponse(@NonNull Call<Meals> call,@NonNull Response<Meals> response) {
-                view.hideLoading();
-                if (response.isSuccessful() && response.body() != null) {
-                    view.setMeals(response.body().getMeals());
-                } else {
-                    view.onErrorLoading(response.message());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    view.hideLoading();
+                    List<Meal> meals = new ArrayList<>();
+                    for (DataSnapshot meal : snapshot.getChildren()) {
+                        meals.add(meal.getValue(Meal.class));
+                    }
+                    view.setMeals(meals);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Meals> call,@NonNull Throwable t) {
-                view.hideLoading();
-                view.onErrorLoading(t.getLocalizedMessage());
+            public void onCancelled(@NonNull DatabaseError error) {
+                view.displayToast(error.getMessage());
             }
-        });*/
-        
+        });
+
     }
 }
