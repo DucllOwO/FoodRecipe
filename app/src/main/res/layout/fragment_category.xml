@@ -30,13 +30,13 @@
 
                     <ImageView
                         android:id="@+id/imageCategoryBg"
-                        android:src="@drawable/sample_image_category"
-                        android:scaleType="centerCrop"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/sample_image_category" />
 
                     <ImageView
-                        android:background="#D9770202"
+                        android:background="#9983BD75"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
