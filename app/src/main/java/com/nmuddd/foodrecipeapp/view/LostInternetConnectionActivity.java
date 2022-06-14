@@ -28,7 +28,7 @@ public class LostInternetConnectionActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 checkConnection();
                 if (isConnected)
-                    onBackPressed();
+                    finish();
             }
         });
     }
