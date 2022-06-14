@@ -1,5 +1,7 @@
 package com.nmuddd.foodrecipeapp.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -8,6 +10,7 @@ import java.io.Serializable;
 public class Category implements Serializable {
 
     @SerializedName("idCategory")
+    @NonNull
     @Expose
     private String idCategory;
     @SerializedName("strCategory")

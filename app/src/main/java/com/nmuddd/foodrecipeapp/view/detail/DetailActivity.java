@@ -398,16 +398,27 @@ public class DetailActivity extends AppCompatActivity implements DetailView, Con
             }
 
 
+
             youtube.setOnClickListener(v -> {
-                Intent intentYoutube = new Intent(Intent.ACTION_VIEW);
-                intentYoutube.setData(Uri.parse(meal.getStrYoutube()));
-                startActivity(intentYoutube);
+                if (meal.getStrYoutube() != null && !meal.getStrYoutube().isEmpty())  {
+                    Intent intentYoutube = new Intent(Intent.ACTION_VIEW);
+                    intentYoutube.setData(Uri.parse(meal.getStrYoutube()));
+                    startActivity(intentYoutube);
+                } else
+                {
+                    displayToast("Sorry this recipe don't have a tutorial on youtube");
+                }
             });
 
             source.setOnClickListener(v -> {
-                Intent intentSource = new Intent(Intent.ACTION_VIEW);
-                intentSource.setData(Uri.parse(meal.getStrSource()));
-                startActivity(intentSource);
+                if (meal.getStrSource() != null && !meal.getStrSource().isEmpty())  {
+                    Intent intentYoutube = new Intent(Intent.ACTION_VIEW);
+                    intentYoutube.setData(Uri.parse(meal.getStrSource()));
+                    startActivity(intentYoutube);
+                } else
+                {
+                    displayToast("Sorry this recipe don't have a source");
+                }
             });
         }
 

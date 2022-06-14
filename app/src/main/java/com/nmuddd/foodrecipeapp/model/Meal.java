@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class Meal implements Serializable {
 
     @SerializedName("idMeal")
+    @NonNull
     @Expose
     private String idMeal;
     @SerializedName("strMeal")

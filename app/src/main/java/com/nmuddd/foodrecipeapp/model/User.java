@@ -1,5 +1,7 @@
 package com.nmuddd.foodrecipeapp.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,6 +13,7 @@ public class User implements Serializable {
     @Expose
     private String avatar;
     @SerializedName("idUser")
+    @NonNull
     @Expose
     private String idUser;
     @SerializedName("email")
