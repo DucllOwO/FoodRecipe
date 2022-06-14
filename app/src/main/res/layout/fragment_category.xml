@@ -42,11 +42,11 @@
 
                     <ImageView
                         android:id="@+id/imageCategory"
-                        android:src="@drawable/sample_image_category"
                         android:layout_width="160dp"
                         android:layout_height="160dp"
+                        android:padding="16dp"
                         android:scaleType="fitStart"
-                        android:padding="16dp" />
+                        android:src="@drawable/sample_image_category" />
 
                     <TextView
                         android:id="@+id/textCategory"

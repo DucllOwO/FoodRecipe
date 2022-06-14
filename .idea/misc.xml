@@ -3,7 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/HP/AndroidStudioProjects/FoodRecipeee2/app/src/main/res/layout/fragment_signup_tab.xml" value="0.2" />
+        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_recipe_app/app/src/main/res/layout/activity_add_meal.xml" value="0.2674772036474164" />
+        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_recipe_app/app/src/main/res/layout/fragment_category.xml" value="0.2674772036474164" />
+        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_recipe_app/app/src/main/res/layout/fragment_personal_list.xml" value="0.2674772036474164" />
+        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_recipe_app/app/src/main/res/layout/fragment_signup_tab.xml" value="0.2674772036474164" />
+        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_recipe_app/app/src/main/res/layout/item_recycler_category.xml" value="0.2674772036474164" />
+        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_recipe_app/app/src/main/res/layout/item_recycler_meal.xml" value="0.2674772036474164" />
+        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_recipe_app/app/src/main/res/layout/item_recycler_meal_personal.xml" value="0.2674772036474164" />
+        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_recipe_app/app/src/main/res/layout/item_recycler_search.xml" value="0.2674772036474164" />
+        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_recipe_app/app/src/main/res/layout/item_view_pager_header.xml" value="0.2674772036474164" />
+        <entry key="..\:/UIT/nam_2/ki_2/nmuddd/project/food_recipe_app/app/src/main/res/layout/item_view_pager_header_shimmer.xml" value="0.2674772036474164" />
       </map>
     </option>
   </component>
