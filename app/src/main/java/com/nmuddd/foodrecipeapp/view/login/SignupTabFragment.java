@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.nmuddd.foodrecipeapp.R;
 import com.nmuddd.foodrecipeapp.Utils.ConnectionReceiver;
 import com.nmuddd.foodrecipeapp.database.Firebase;
@@ -106,6 +107,7 @@ public class SignupTabFragment extends Fragment implements ConnectionReceiver.Re
                                                                                 email_et.setText("");
                                                                                 password_et.setText("");
                                                                                 repassword_et.setText("");
+                                                                                FirebaseAuth.getInstance().signOut();
                                                                             }
                                                                         });
                                                                         progressBar.setVisibility(View.GONE);

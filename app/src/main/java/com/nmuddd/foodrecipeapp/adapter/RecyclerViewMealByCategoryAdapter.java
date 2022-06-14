@@ -177,12 +177,14 @@ public class RecyclerViewMealByCategoryAdapter extends RecyclerView.Adapter<Recy
                 if (snapshot.exists()) {
                     for (DataSnapshot user : snapshot.getChildren()) {
                         if (CurrentUser.mealFavorite != null) {
-                            for (Meal meal : user.getValue(User.class).getMealFavorite()) {
-                                if (meal.getStrMeal().equals(strMealName)) {
-                                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
-                                    break;
-                                } else
-                                    viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
+                            if (user.getValue(User.class).getMealFavorite() != null) {
+                                for (Meal meal : user.getValue(User.class).getMealFavorite()) {
+                                    if (meal.getStrMeal().equals(strMealName)) {
+                                        viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite));
+                                        break;
+                                    } else
+                                        viewHolder.love.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_border));
+                                }
                             }
                         }
                         CurrentUser.mealFavorite = user.getValue(User.class).getMealFavorite();
