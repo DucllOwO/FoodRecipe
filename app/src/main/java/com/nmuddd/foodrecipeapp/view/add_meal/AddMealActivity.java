@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -136,10 +137,10 @@ public class AddMealActivity extends AppCompatActivity implements View.OnClickLi
 
     private void setupActionBar() {
         setSupportActionBar(toolbar);
-        collapsingToolbarLayout.setTitle("");
+        collapsingToolbarLayout.setTitle("Add Recipe");
         collapsingToolbarLayout.setContentScrimColor(getResources().getColor(R.color.colorWhite));
         collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.colorPrimary));
-        collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorWhite));
+        collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
