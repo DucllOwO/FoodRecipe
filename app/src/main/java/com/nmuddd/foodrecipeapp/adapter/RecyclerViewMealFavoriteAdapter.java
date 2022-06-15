@@ -166,7 +166,10 @@ public class RecyclerViewMealFavoriteAdapter extends RecyclerView.Adapter<Recycl
 
     @Override
     public int getItemCount() {
-        return meals.size();
+        if (meals != null)
+            return meals.size();
+        else
+            return 0;
     }
 
     static class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

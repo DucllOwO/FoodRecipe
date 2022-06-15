@@ -92,10 +92,14 @@ public class AccountFragment extends Fragment implements View.OnClickListener, C
         logout_btn.setOnClickListener(this);
 
         loadImage();
+        try {
+            numofYourRecipeTV.setText(numofYourRecipeTV.getText() + Integer.toString(CurrentUser.myMeal.size()));
+            numOfFavoriteTV.setText(numOfFavoriteTV.getText() + Integer.toString(CurrentUser.mealFavorite.size()));
+            emailTV.setText(emailTV.getText() + CurrentUser.email);
+        } catch (Exception e) {
 
-        numofYourRecipeTV.setText(numofYourRecipeTV.getText() + Integer.toString(CurrentUser.myMeal.size()));
-        numOfFavoriteTV.setText(numOfFavoriteTV.getText() + Integer.toString(CurrentUser.mealFavorite.size()));
-        emailTV.setText(emailTV.getText() + CurrentUser.email);
+        }
+
 
 
         return view;

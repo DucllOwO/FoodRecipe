@@ -67,10 +67,11 @@ public class FavoriteFragment extends Fragment implements FavoriteView, Connecti
 
     @Override
     public void setFavoriteList(List<Meal> mealFavorite) {
-        if (mealFavorite != null) {
             RecyclerViewMealFavoriteAdapter adapter = new RecyclerViewMealFavoriteAdapter(getContext(), mealFavorite);
             recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             adapter.notifyDataSetChanged();
+
 
             adapter.setOnItemClickListener((view, position) -> {
                 if (checkConnection()) {
@@ -80,7 +81,6 @@ public class FavoriteFragment extends Fragment implements FavoriteView, Connecti
                     startActivity(intent);
                 }
             });
-        }
     }
 
     @Override
