@@ -1,12 +1,13 @@
 # FoodRecipeApp
-• Meals API
 
-• Butterknife : sử dụng để binding view thay cho findViewById
+# Đồ án môn Nhập môn ứng dụng di động
 
-• Retrofit2 dùng để tạo kết nối HTTP giao tiếp với Meal API
+##  Danh sách thành viên
+1. [Trần Quang Phúc](https://github.com/trph3322) - 20520279
+2. [Trương Kim Điền](https://github.com/Kimdien2206) - 20520442
+3. [Nguyễn Trí Đức](https://github.com/DucllOwO) - 20520453
+4. [Sa Đam](https://github.com/SaDam1154) - 20521154
 
-• Picasso: dùng để load hoặc hiển thị hình ảnh trong android
 
-• Shimmer FB: hiệu ứng load trong lúc đợi data của FB
-
-• Material design
+# Giáo viên hướng dẫn
+## Huỳnh Tuấn Anh
